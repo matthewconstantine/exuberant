@@ -1,0 +1,7 @@
+# gitignore
+.DS_Store
+*.log*
+node_modules
+lib
+_book
+.vscode
