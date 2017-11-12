@@ -1,12 +1,9 @@
 const React = require('react');
-const buildTree = require('./src/buildTree');
+const exuberant = require('../../src/index')
+const { Project, Dir, File, buildTree } = exuberant
 
-const Project = (props) => <project>{props.children}</project>
-const Dir = (props) => <dir name={props.name}>{props.children}</dir>
-const File = (props) => <file name={props.name}>{props.children}</file>
 const Code = (props) => <code>{props.children}</code>
 
-const name = 'world'
 const helloWorld = (name) => `
   export () => {return 'hello ${name}'}
 `
