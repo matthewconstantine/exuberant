@@ -4,4 +4,5 @@ module.exports = {
   Dir: require('./components/Dir'),
   File: require('./components/File'),
   Project: require('./components/Project'),
+  Code: require('./components/Code'),
 }

@@ -19,7 +19,7 @@ const project = buildTree(
       </Dir>
     </Dir>
   </Project>
-);
+)
 
 saveToFileSystem(project.toJSON(), './output');
 ```
