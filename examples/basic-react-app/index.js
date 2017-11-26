@@ -3,7 +3,7 @@ const exuberant = require('../../src/index')
 
 const { Project, Dir, File, Code, buildTree } = exuberant
 
-const tree = buildTree(
+module.exports = buildTree(
   <Project>
     <File name="package.json">
       <Code>
@@ -99,7 +99,7 @@ const tree = buildTree(
           import List from './components/List'
           import Item from './components/Item'
 
-          const data = ['red', 'green', 'blue', 'mauve']
+          const data = ['red', 'green', 'blue', 'mauve', 'goldenrod']
         
           const App = () => 
             <List name="Colors">
@@ -144,5 +144,3 @@ const tree = buildTree(
     </Dir>
   </Project>
 )
-
-module.exports = tree
