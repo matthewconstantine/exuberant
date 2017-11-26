@@ -9,7 +9,7 @@ module.exports = buildTree(
       <Code>
         {`
           {
-            "name": "Basic React App made by Exuberant",
+            "name": "basic-exuberant-react-app",
             "version": "0.1.0",
             "description": "",
             "main": "index.js",
@@ -24,7 +24,7 @@ module.exports = buildTree(
             "devDependencies": {
               "babel-core": "^6.26.0",
               "babel-loader": "^7.1.2",
-              "babel-preset-es2015": "^6.24.1",
+              "babel-preset-env": "^1.6.1",
               "babel-preset-react": "^6.24.1",
               "babel-preset-stage-2": "^6.24.1",
               "webpack": "^3.8.1",
@@ -34,7 +34,7 @@ module.exports = buildTree(
             "license": "ISC",
             "babel": {
               "presets": [
-                "es2015",
+                "env",
                 "react",
                 "stage-2"
               ]
@@ -99,7 +99,7 @@ module.exports = buildTree(
           import List from './components/List'
           import Item from './components/Item'
 
-          const data = ['red', 'green', 'blue', 'mauve', 'goldenrod']
+          const data = ['red', 'green', 'blue', 'mauve']
         
           const App = () => 
             <List name="Colors">

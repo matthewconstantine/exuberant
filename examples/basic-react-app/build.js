@@ -1,11 +1,14 @@
 #!/usr/bin/env node
-
 require('babel-core/register')({  presets: ['es2015', 'react'] })
-const jsome = require('jsome')
+const path = require('path')
 const exuberant = require('../../src/index')
-const { saveToFileSystem } = exuberant
-const tree = require('./index')
+const { build } = exuberant
 
-console.log(jsome(tree));
-
-saveToFileSystem(tree.toJSON(), './output');
+build(
+  path.join(__dirname, 'index'), 
+  path.join(__dirname, 'output'),
+  { 
+    watch: process.argv.includes('--watch'),
+    debug: process.argv.includes('--debug'),
+  }
+)

@@ -1,4 +1,5 @@
 module.exports = {
+  build: require('./build'),
   buildTree: require('./buildTree'),
   saveToFileSystem: require('./saveToFileSystem'),
   Dir: require('./components/Dir'),
