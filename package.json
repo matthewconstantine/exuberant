@@ -17,9 +17,12 @@
     "chokidar": "^1.7.0",
     "decache": "^4.3.0",
     "fs-extra": "^4.0.1",
+    "invariant": "^2.2.2",
     "jsome": "^2.3.26",
     "path": "^0.12.7",
-    "react": "^15.4.1",
+    "performance-now": "^2.1.0",
+    "react": "^16.2.0",
+    "react-reconciler": "^0.7.0",
     "react-test-renderer": "^15.4.1",
     "strip-indent": "^2.0.0",
     "trim-newlines": "^2.0.0"
