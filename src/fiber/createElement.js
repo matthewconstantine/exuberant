@@ -1,3 +1,4 @@
+import Root from './Root'
 import Dir from './Dir'
 import File from './File'
 
@@ -10,7 +11,7 @@ import File from './File'
 function createElement(type, props, root) {
   console.log('CreateElement: ', {type, props, root})
   const COMPONENTS = {
-    ROOT: () => new Dir(root, props),
+    ROOT: () => new Root(root, props),
     DIR: () => new Dir(root, props),
     FILE: () => new File(root, props),
     default: undefined,

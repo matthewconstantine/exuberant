@@ -1,7 +1,7 @@
 import invariant from 'invariant'
 import nodePath from 'path'
 
-class Dir {
+class Root {
   
   constructor(root, props) {
     console.log("Dir props", props)
@@ -30,21 +30,18 @@ class Dir {
 
   renderChildren(path) {
     this.children.forEach(child => {
-      // TODO: this is probably where stateless components could be supported.
       invariant(typeof child.render === 'function', `Dir can only render components with a render method. Found \`${child}\` instead.`)
       child.render(path)
     })
   }
 
-
-  render(parentPath) {    
-    invariant(typeof parentPath !== 'undefined', "props.path was not passed down from parent" )
-    invariant(typeof this.props.name !== 'undefined', "Dir does not have props.name")
-    const path = nodePath.join(parentPath, this.props.name)
-    console.log(`[Create Directory]: `, path)
+  render() {    
+    invariant(typeof this.props.path !== 'undefined', 'Root node was not provided props.path')
+    const path = this.props.path
+    console.log(`[Create Root Directory]: `, path)
     this.renderChildren(path);
   }
 
 }
 
-export default Dir
+export default Root
