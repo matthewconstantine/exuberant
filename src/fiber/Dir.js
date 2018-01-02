@@ -1,34 +1,63 @@
 import invariant from 'invariant'
 import nodePath from 'path'
 
-class Dir {
-  
+// Note: This is a host component not a React component. It's created
+// by the renderer (render.js) and updated by the reconciler (FileSystemRenderer)
+
+
+const NEW = 'NEW'
+const CREATED = 'CREATED'
+
+class Dir {  
   constructor(root, props) {
     console.log("Dir props", props)
-    // TODO: refactor out this.props and set this.name and this.path directly
+    this.key = props.name
     this.props = props
     this.children = []
+    this.rename = null
+    this.childrenToDelete = []
+    this.status = NEW
   }
 
-  // Add children
+  // Called by FileSystemRenderer
   appendChild(child) {
     console.log("child", child)
     this.children.push(child);
   }
 
-  // Remove children
+  // Called by FileSystemRenderer
   removeChild(child) {
     const index = this.children.indexOf(child);
     this.children.splice(index, 1);
+    this.childrenToDelete.push(child)
   }
 
-  path() {
-    return typeof this.props.name !== 'undefined' ? 
-      nodePath.join(this.props.path, this.props.name) :
-      this.props.path
+  // From within the render loop (because only it knows the parentPath)
+  removeDeletedChildren(parentPath) {
+    this.childrenToDelete.forEach(child => {
+      child.removeSelf && child.removeSelf(parentPath)
+    })
+    this.childrenToDelete = []
+  }
+  
+  // TODO: implement this in File.js too
+  removeSelf(parentPath) {
+    const path = nodePath.join(parentPath, this.props.name)
+    console.log(`[Remove Directory]: ${path}`)
+  }
+
+  commitUpdate(oldProps, newProps) {
+    if (oldProps.name !== newProps.name) {
+      this.rename = {
+        old: oldProps.name,
+        new: newProps.name,
+      }
+      console.log(`(Rename Directory Prepared): \n  from: ${oldProps.name}\n  to: ${newProps.name}`)
+    }    
   }
 
   renderChildren(path) {
+    this.removeDeletedChildren(path)
     this.children.forEach(child => {
       // TODO: this is probably where stateless components could be supported.
       invariant(typeof child.render === 'function', `Dir can only render components with a render method. Found \`${child}\` instead.`)
@@ -36,12 +65,22 @@ class Dir {
     })
   }
 
-
   render(parentPath) {    
+    let path
     invariant(typeof parentPath !== 'undefined', "props.path was not passed down from parent" )
     invariant(typeof this.props.name !== 'undefined', "Dir does not have props.name")
-    const path = nodePath.join(parentPath, this.props.name)
-    console.log(`[Create Directory]: `, path)
+    if (this.rename) {
+      const oldFilePath = nodePath.join(parentPath, this.rename.old)
+      path = nodePath.join(parentPath, this.rename.new)
+      console.log(`[Rename Directory]: \n  from: ${oldFilePath}\n  to: ${path}`)
+      this.rename = null
+    } else {
+      path = nodePath.join(parentPath, this.props.name)
+      if (this.status === NEW) {
+        console.log(`[Create Directory]: `, path)
+      }
+      this.status = CREATED
+    }
     this.renderChildren(path);
   }
 

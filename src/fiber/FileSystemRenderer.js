@@ -9,62 +9,63 @@ const FileSystemRenderer = Reconciler({
     if (parentInstance.appendChild) {
       parentInstance.appendChild(child);
     } else {
+      // TODO: remove this branch
       parentInstance.document = child;
     }
   },
 
   createInstance(type, props, internalInstanceHandle, fiberNode) {
-    console.log('a', (arguments))
+    console.log('a createInstance', (arguments))
     return createElement(type, props, internalInstanceHandle);
   },
 
   createTextInstance(text, rootContainerInstance, internalInstanceHandle, fiberNode) {
-    console.log('b', (arguments))
+    console.log('b createTextInstance', (arguments))
     return text;
   },
 
-  finalizeInitialChildren(wordElement, type, props) {
-    console.log('c', (arguments))
+  finalizeInitialChildren(instance, type, props) {
+    console.log('c finalizeInitialChildren', (arguments))
     return false;
   },
 
   getPublicInstance(inst) {
-    console.log('d', (arguments))
+    console.log('d getPublicInstance', (arguments))
     return inst;
   },
 
   prepareForCommit() {
-    console.log('e', (arguments))
+    console.log('e prepareForCommit', (arguments))
     // noop
   },
 
-  prepareUpdate(wordElement, type, oldProps, newProps) {
-    console.log('f', (arguments))
-    return true;
+  prepareUpdate(instance, type, oldProps, newProps) {
+    console.log('f prepareUpdate', (arguments))
+    return true // appears in commitUpdate as the updatePayload argument
   },
 
   resetAfterCommit() {
-    console.log('g', (arguments))
+    console.log('g resetAfterCommit', (arguments))
     // noop
   },
 
-  resetTextContent(wordElement) {
-    console.log('h', (arguments))
+  resetTextContent(instance) {
+    console.log('h resetTextContent', (arguments))
     // noop
   },
 
   getRootHostContext(rootInstance) {
-    console.log('i', (arguments))
+    console.log('i getRootHostContext', (arguments))
     // You can use this 'rootInstance' to pass data from the roots.
   },
 
   getChildHostContext() {
-    console.log('j', (arguments))
+    console.log('j getChildHostContext', (arguments))
     return emptyObject;
   },
 
   shouldSetTextContent(type, props) {
-    console.log('k', (arguments))
+    console.log('k shouldSetTextContent', (arguments))
     return false;
   },
 
@@ -74,50 +75,43 @@ const FileSystemRenderer = Reconciler({
 
   mutation: {
     appendChild(parentInstance, child) {
-      console.log('aa', (arguments))
-      if (parentInstance.appendChild) {
-        parentInstance.appendChild(child);
-      } else {
-        parentInstance.document = child;
-      }
+      console.log('aa appendChild', (arguments))
+      parentInstance.appendChild(child);     
     },
 
     appendChildToContainer(parentInstance, child) {
-      console.log('bb', (arguments))
-      if (parentInstance.appendChild) {
-        parentInstance.appendChild(child);
-      } else {
-        parentInstance.document = child;
-      }
+      console.log('bb appendChildToContainer', (arguments))
+      parentInstance.appendChild(child);
     },
 
     removeChild(parentInstance, child) {
-      console.log('cc', (arguments))
+      console.log('cc removeChild', (arguments))
       parentInstance.removeChild(child);
     },
 
     removeChildFromContainer(parentInstance, child) {
-      console.log('dd', (arguments))
+      console.log('dd removeChildFromContainer', (arguments))
       parentInstance.removeChild(child);
     },
 
     insertBefore(parentInstance, child, beforeChild) {
-      console.log('ee', (arguments))
+      console.log('ee insertBefore', (arguments))
       // noop
     },
 
     commitUpdate(instance, updatePayload, type, oldProps, newProps) {
-      console.log('ff', (arguments))
+      console.log('ff commitUpdate', (arguments))
+      instance.commitUpdate(oldProps, newProps)
       // noop
     },
 
     commitMount(instance, updatePayload, type, oldProps, newProps) {
-      console.log('gg', (arguments))
+      console.log('gg commitMount', (arguments))
       // noop
     },
 
     commitTextUpdate(textInstance, oldText, newText) {
-      console.log('hh', (arguments))
+      console.log('hh commitTextUpdate', (arguments))
       textInstance.children = newText;
     },
   }

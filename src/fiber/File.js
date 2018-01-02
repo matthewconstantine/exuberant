@@ -1,11 +1,13 @@
 import invariant from 'invariant'
 import nodePath from 'path'
 
+// Note: This is a host component not a React component. It's created
+// by the renderer (render.js) and updated by the reconciler (FileSystemRenderer)
+
 class File {
   
   constructor(root, props) {
     console.log("props", props)
-    debugger
     this.name = props.name
     this.children = []
     this.contents = []
@@ -21,6 +23,10 @@ class File {
   removeChild(child) {
     const index = this.children.indexOf(child);
     this.children.splice(index, 1);
+  }
+
+  commitUpdate(oldProps, newProps) {
+    // Implement
   }
 
   // TODO: this can probably just be a reduce without this.contents
@@ -48,7 +54,7 @@ class File {
     const path = nodePath.join(parentPath, this.name)
     this.renderChildren()
     console.log(`[Render file with name:] ${path}`)
-    console.log(`[And contents of:] ${this.contents.join('\n')}`)
+    console.log(`  ${this.contents.join('\n  ')}`)
   }
 
 }

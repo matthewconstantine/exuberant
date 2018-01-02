@@ -21,26 +21,39 @@ const Wrapper = ({ children }) => {
   return children
 }
 
-const SomeJSX = (
-  <Wrapper>
-    <Text>Some text within some JSX</Text>
-  </Wrapper>
-)
+const MakeSomeDirs = ({ names }) => names.map(name => <Dir key={name} name={name} />)
 
 const App = (
-  <Dir name="outer_directory">
-    <Dir name="inner_directory">
-      <File name="file">
-        Contents as String
-        <Foo contents="Content from Component" />
-        <Text contents="Content from stateless Component" />
-        <Wrapper>
-          <Text>Some text within some JSX</Text>
-        </Wrapper>
+  <Dir key="outer-dir-key" name="outer_directory">
+    <Dir key="inner-dir-key" name="inner_directory">
+      <File key="file-key" name="file">
+        Contents as String 2
       </File>
+      {/* <Dir key="extra" name="extra" /> */}
+      {/* <Dir key="extra2" name="extra2" /> */}
+      {/* <Dir key="extra3" name="extra3" /> */}
+      <Dir key="extra4" name="extra4" />
+      <Dir key="extra5" name="extra5" />
+      <Dir key="extra6" name="extra6" />
     </Dir>
   </Dir>
 )
+
+// const App = (
+//   <Dir key="outer-dir-key" name="outer_directory">
+//     <Dir key="inner-dir-key" name="inner_directory">
+//       <File key="file-key" name="file">
+//         Contents as String
+//         <Foo key="foo-key" contents="Content from Component" />
+//         <Text key="text-key" contents="Content from stateless Component" />
+//         <Wrapper key="wrapper-key">
+//           <Text>Some fooooooo text within some JSX</Text>
+//         </Wrapper>
+//       </File>
+//       <MakeSomeDirs key="makedirs-key" names={ ['one', 'two', 'three'] } />
+//     </Dir>
+//   </Dir>
+// )
 
 module.exports = App
 

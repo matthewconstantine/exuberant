@@ -1,21 +1,33 @@
-console.log('Here: ', __filename)
 import fs from 'fs'
 import path from 'path'
+import decache from 'decache'
+import chokidar from 'chokidar'
 import { createElement } from './createElement'
 import FileSystemRenderer from './FileSystemRenderer'
 
-const render = (element, outputPath, options) => {
-  console.log(element, outputPath, options)
+const logger = console.log
 
-  // Create root container instance
+const render = (appPath, outputPath, options, log = logger) => {
+  const element = require(appPath)
   const container = createElement('ROOT', { path: outputPath })
-
-  // Returns the current fiber (flushed fiber)
   const node = FileSystemRenderer.createContainer(container)
-
-  // Schedules a top level update with current fiber and a priority level (depending upon the context)
   FileSystemRenderer.updateContainer(element, node, null)
   container.render() 
+
+  if (options.watch) {
+    log(`Watching... ${path.dirname(appPath)}`)
+    const watcher = chokidar.watch(
+      path.dirname(appPath), 
+      { ignored: [/(^|[\/\\])\../, outputPath] }
+    )
+    watcher.on('change', changePath => {
+      log(`Rebuilding. Detected change in ${path.relative(process.cwd(), changePath)}`)
+      decache(appPath)
+      const updatedElement = require(appPath)
+      FileSystemRenderer.updateContainer(updatedElement, node, null)
+      container.render()
+    })
+  }
 }
 
 // import parse from './parse'

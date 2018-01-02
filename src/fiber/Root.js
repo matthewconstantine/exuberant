@@ -1,6 +1,9 @@
 import invariant from 'invariant'
 import nodePath from 'path'
 
+const NEW = 'NEW'
+const CREATED = 'CREATED'
+
 class Root {
   
   constructor(root, props) {
@@ -8,6 +11,7 @@ class Root {
     // TODO: refactor out this.props and set this.name and this.path directly
     this.props = props
     this.children = []
+    this.status = NEW
   }
 
   // Add children
@@ -22,12 +26,6 @@ class Root {
     this.children.splice(index, 1);
   }
 
-  path() {
-    return typeof this.props.name !== 'undefined' ? 
-      nodePath.join(this.props.path, this.props.name) :
-      this.props.path
-  }
-
   renderChildren(path) {
     this.children.forEach(child => {
       invariant(typeof child.render === 'function', `Dir can only render components with a render method. Found \`${child}\` instead.`)
@@ -38,7 +36,10 @@ class Root {
   render() {    
     invariant(typeof this.props.path !== 'undefined', 'Root node was not provided props.path')
     const path = this.props.path
-    console.log(`[Create Root Directory]: `, path)
+    if (this.status === NEW) {
+      console.log(`[Create Root Directory]: `, path)
+      this.status = CREATED
+    }
     this.renderChildren(path);
   }
 
