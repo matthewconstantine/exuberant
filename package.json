@@ -20,6 +20,7 @@
     "chokidar": "^1.7.0",
     "decache": "^4.3.0",
     "eslint": "^4.14.0",
+    "fbjs": "^0.8.16",
     "fs-extra": "^4.0.1",
     "invariant": "^2.2.2",
     "jsome": "^2.3.26",
@@ -31,6 +32,7 @@
     "trim-newlines": "^2.0.0"
   },
   "devDependencies": {
+    "@types/fs-extra": "^5.0.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.1.2",
     "eslint-config-airbnb": "^16.1.0",
@@ -44,8 +46,8 @@
     "prettier": "1.9.2"
   },
   "jest": {
-    "setupFiles": [
-      "jest-plugin-fs/setup"
-    ]
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
   }
 }

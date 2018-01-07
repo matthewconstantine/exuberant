@@ -21,4 +21,4 @@ function createElement(type, props, root) {
   return COMPONENTS[type]() || COMPONENTS.default
 }
 
-export { createElement }
+export default createElement

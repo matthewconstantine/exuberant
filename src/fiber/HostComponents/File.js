@@ -1,12 +1,11 @@
 import invariant from 'invariant'
 import nodePath from 'path'
-
+import fs from 'fs-extra'
 // Note: This is a host component not a React component. It's created
 // by the renderer (render.js) and updated by the reconciler (FileSystemRenderer)
 
 class File {
-  constructor(root, props) {
-    console.log('props', props)
+  constructor(root, props) {  
     this.name = props.name
     this.children = []
   }
@@ -27,6 +26,20 @@ class File {
     this.children.splice(index, 0, child)
   }
 
+  commitUpdate(oldProps, newProps) {
+    if (oldProps.name !== newProps.name) {
+      this.rename = {
+        old: oldProps.name,
+        new: newProps.name,
+      }
+      console.log(
+        `(Rename File Prepared): \n  from: ${oldProps.name}\n  to: ${
+          newProps.name
+        }`
+      )
+    }
+  }
+
   renderChildren() {
     return this.children.map(child => {
       if (typeof child === 'string') {
@@ -45,17 +58,26 @@ class File {
     })
   }
 
+  // TODO: This could be optimized for updates with both a new name and contents
   render(parentPath) {
+    let path
     invariant(
       typeof this.name !== 'undefined',
-      'File node was not provided props.path'
+      'File node was not provided props.name'
     )
-    const path = nodePath.join(parentPath, this.name)
+    if (this.rename) {
+      const oldFilePath = nodePath.join(parentPath, this.rename.old)
+      path = nodePath.join(parentPath, this.rename.new)
+      console.log(`[Rename File]: \n  from: ${oldFilePath}\n  to: ${path}`)
+      fs.renameSync(oldFilePath, path)
+      this.rename = null
+    } else {
+      path = nodePath.join(parentPath, this.name)
+    }
     const contents = this.renderChildren()
-    console.log('contents', contents)
-
     console.log(`[Render file with name:] ${path}`)
     console.log(`  ${contents.join('\n  ')}`)
+    fs.writeFileSync(path, contents.join('\n'))
     return contents
   }
 }

@@ -1,5 +1,6 @@
 import invariant from 'invariant'
 import nodePath from 'path'
+import fs from 'fs-extra'
 
 // Note: This is a host component not a React component. It's created
 // by the renderer (render.js) and updated by the reconciler (FileSystemRenderer)
@@ -9,7 +10,7 @@ const CREATED = 'CREATED'
 
 class Dir {
   constructor(root, props) {
-    console.log('Dir props', props)
+    // console.log('Dir props', props)
     this.key = props.name
     this.props = props
     this.children = []
@@ -20,7 +21,7 @@ class Dir {
 
   // Called by FileSystemRenderer
   appendChild(child) {
-    console.log('child', child)
+    // console.log('child', child)
     this.children.push(child)
   }
 
@@ -33,9 +34,9 @@ class Dir {
 
   // From within the render loop (because only it knows the parentPath)
   removeDeletedChildren(parentPath) {
-    this.childrenToDelete.forEach(child => {
-      child.removeSelf && child.removeSelf(parentPath)
-    })
+    this.childrenToDelete.forEach(
+      child => child.removeSelf && child.removeSelf(parentPath)
+    )
     this.childrenToDelete = []
   }
 
@@ -43,6 +44,7 @@ class Dir {
   removeSelf(parentPath) {
     const path = nodePath.join(parentPath, this.props.name)
     console.log(`[Remove Directory]: ${path}`)
+    fs.removeSync(path)
   }
 
   commitUpdate(oldProps, newProps) {
@@ -85,11 +87,13 @@ class Dir {
       const oldFilePath = nodePath.join(parentPath, this.rename.old)
       path = nodePath.join(parentPath, this.rename.new)
       console.log(`[Rename Directory]: \n  from: ${oldFilePath}\n  to: ${path}`)
+      fs.renameSync(oldFilePath, path)
       this.rename = null
     } else {
       path = nodePath.join(parentPath, this.props.name)
       if (this.status === NEW) {
         console.log(`[Create Directory]: `, path)
+        fs.ensureDirSync(path)
       }
       this.status = CREATED
     }

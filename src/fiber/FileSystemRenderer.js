@@ -2,36 +2,36 @@ import React from 'react'
 import Reconciler from 'react-reconciler'
 import emptyObject from 'fbjs/lib/emptyObject'
 import now from 'performance-now'
-import { createElement } from './createElement'
+import createElement from './createElement'
 
 const FileSystemRenderer = Reconciler({
   appendInitialChild(parentInstance, child) {
-    if (parentInstance.appendChild) {
-      parentInstance.appendChild(child);
-    } else {
-      // TODO: remove this branch
-      parentInstance.document = child;
-    }
+    parentInstance.appendChild(child)
   },
 
-  createInstance(type, props, internalInstanceHandle, fiberNode) {
+  createInstance(type, props, internalInstanceHandle /* , fiberNode */) {
     // console.log('a createInstance', (arguments))
-    return createElement(type, props, internalInstanceHandle);
+    return createElement(type, props, internalInstanceHandle)
   },
 
-  createTextInstance(text, rootContainerInstance, internalInstanceHandle, fiberNode) {
+  createTextInstance(
+    text
+    /* rootContainerInstance,
+    internalInstanceHandle,
+    fiberNode */
+  ) {
     // console.log('b createTextInstance', (arguments))
     return { text }
   },
 
-  finalizeInitialChildren(instance, type, props) {
+  finalizeInitialChildren(/* instance, type, props */) {
     // console.log('c finalizeInitialChildren', (arguments))
-    return false;
+    return false
   },
 
   getPublicInstance(inst) {
     // console.log('d getPublicInstance', (arguments))
-    return inst;
+    return inst
   },
 
   prepareForCommit() {
@@ -39,7 +39,7 @@ const FileSystemRenderer = Reconciler({
     // noop
   },
 
-  prepareUpdate(instance, type, oldProps, newProps) {
+  prepareUpdate(/* instance, type, oldProps, newProps */) {
     // console.log('f prepareUpdate', (arguments))
     return true // appears in commitUpdate as the updatePayload argument
   },
@@ -49,24 +49,23 @@ const FileSystemRenderer = Reconciler({
     // noop
   },
 
-  resetTextContent(instance) {
+  resetTextContent(/* instance */) {
     // console.log('h resetTextContent', (arguments))
     // noop
   },
 
-  getRootHostContext(rootInstance) {
+  getRootHostContext(/* rootInstance */) {
     // console.log('i getRootHostContext', (arguments))
-    // You can use this 'rootInstance' to pass data from the roots.
   },
 
   getChildHostContext() {
     // console.log('j getChildHostContext', (arguments))
-    return emptyObject;
+    return emptyObject
   },
 
-  shouldSetTextContent(type, props) {
+  shouldSetTextContent(/* type, props */) {
     // console.log('k shouldSetTextContent', (arguments))
-    return false;
+    return false
   },
 
   now: () => now(),
@@ -76,44 +75,49 @@ const FileSystemRenderer = Reconciler({
   mutation: {
     appendChild(parentInstance, child) {
       // console.log('aa appendChild', (arguments))
-      parentInstance.appendChild(child);     
+      parentInstance.appendChild(child)
     },
 
     appendChildToContainer(parentInstance, child) {
       // console.log('bb appendChildToContainer', (arguments))
-      parentInstance.appendChild(child);
+      parentInstance.appendChild(child)
     },
 
     removeChild(parentInstance, child) {
       // console.log('cc removeChild', (arguments))
-      parentInstance.removeChild(child);
+      parentInstance.removeChild(child)
     },
 
     removeChildFromContainer(parentInstance, child) {
       // console.log('dd removeChildFromContainer', (arguments))
-      parentInstance.removeChild(child);
+      parentInstance.removeChild(child)
     },
 
     insertBefore(parentInstance, child, beforeChild) {
       // console.log('ee insertBefore', (arguments))
-      parentInstance.insertBefore && parentInstance.insertBefore(child, beforeChild)
+      if (parentInstance.insertBefore) {
+        parentInstance.insertBefore(child, beforeChild)
+      }
     },
 
     commitUpdate(instance, updatePayload, type, oldProps, newProps) {
       // console.log('ff commitUpdate', (arguments))
-      // noop      
+      if (oldProps.children !== newProps.children) {
+        this.children = newProps.children
+      }
     },
 
-    commitMount(instance, updatePayload, type, oldProps, newProps) {
+    commitMount(/* instance, updatePayload, type, oldProps, newProps */) {
       // console.log('gg commitMount', (arguments))
       // noop
     },
 
+    /* eslint-disable no-param-reassign */
     commitTextUpdate(textInstance, oldText, newText) {
       // console.log('hh commitTextUpdate', (arguments))
-      textInstance.text = newText;
+      textInstance.text = newText
     },
-  }
+  },
 })
 
 export default FileSystemRenderer

@@ -1,33 +1,42 @@
-import fs from 'fs'
+/* eslint-disable global-require, import/no-dynamic-require, no-console */
 import path from 'path'
 import decache from 'decache'
 import chokidar from 'chokidar'
-import { createElement } from './createElement'
+import createElement from './createElement'
 import FileSystemRenderer from './FileSystemRenderer'
 
-const logger = console.log
+const defaultLogger = console.log
 
-const render = (appPath, outputPath, options, log = logger) => {
-  const element = require(appPath)
+const renderElement = (element, outputPath) => {
   const container = createElement('ROOT', { path: outputPath })
   const node = FileSystemRenderer.createContainer(container)
   FileSystemRenderer.updateContainer(element, node, null)
-  container.render() 
+  container.render()
+  return { container, node }
+}
+
+const rerenderElement = (element, container, node) => {
+  FileSystemRenderer.updateContainer(element, node, null)
+  container.render()
+}
+
+const exuberantRender = (appPath, outputPath, options, log = defaultLogger) => { 
+  const element = require(appPath)
+  const { container, node } = renderElement(element, outputPath)
 
   if (options.watch) {
     log(`Watching... ${path.dirname(appPath)}`)
-    const watcher = chokidar.watch(
-      path.dirname(appPath), 
-      { ignored: [/(^|[\/\\])\../, outputPath] }
-    )
+    const watcher = chokidar.watch(path.dirname(appPath), {
+      ignored: [/(^|[/\\])\../, outputPath],
+    })
     watcher.on('change', changePath => {
-      log(`Rebuilding. Detected change in ${path.relative(process.cwd(), changePath)}`)
+      const displayPath = path.relative(process.cwd(), changePath)
+      log(`\n\nRebuilding. Detected change in ${displayPath}}`)
       decache(appPath)
       const updatedElement = require(appPath)
-      FileSystemRenderer.updateContainer(updatedElement, node, null)
-      container.render()
+      rerenderElement(updatedElement, container, node)
     })
   }
 }
 
-export default render
+export default exuberantRender
