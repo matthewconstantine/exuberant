@@ -10,51 +10,82 @@ class File {
     console.log("props", props)
     this.name = props.name
     this.children = []
-    this.contents = []
   }
 
-  // Add children
   appendChild(child) {
-    console.log("child", child)
+    console.log("(File appendChild)", child)
     this.children.push(child);
   }
 
-  // Remove children
   removeChild(child) {
+    console.log("(File removeChild)", child)
     const index = this.children.indexOf(child);
     this.children.splice(index, 1);
   }
 
-  commitUpdate(oldProps, newProps) {
-    // Implement
+  insertBefore(child, beforeChild) {    
+    const index = this.children.indexOf(beforeChild)
+    this.children.splice(index, 0, child)
   }
 
-  // TODO: this can probably just be a reduce without this.contents
-  renderChildren() {
-    this.children.forEach(child => {
-      let output
+  commitUpdate(oldProps, newProps) {
+    // this.children = []
+    // debugger
+    // if (oldProps.children !== newProps.children) {
+    //   this.children = newProps.children
+    // }
+  }
+
+  // // TODO: this can probably just be a reduce without this.contents
+  // renderChildren() {
+  //   this.children.forEach(child => {
+  //     let output
+  //     if (typeof child === 'string') {
+  //       output = child
+  //       console.log(`[Add String to File]: ${output}`)
+  //     } else if (typeof child === 'function') {
+  //       output = child()
+  //       console.log(`[Add String to File from function]: ${output}`)
+  //     } else if (typeof child.render === 'function') {
+  //       output = child.render()
+  //       console.log(`[Add String to File from child.render]: ${output}`)
+  //     } else if (child.type === 'HostTextInstance')
+  //       output = 
+  //     } else {
+  //       invariant(false, `File Could not render: ${child}`)
+  //     }
+  //     this.contents.push(output)
+  //   })
+  // }
+
+  renderChildren2() {
+    return this.children.map((child) => {
       if (typeof child === 'string') {
-        output = child
-        console.log(`[Add String to File]: ${output}`)
+        console.log(`(Adding String): ${child}`)
+        return child
       } else if (typeof child === 'function') {
-        output = child()
-        console.log(`[Add String to File from function]: ${output}`)
+        console.log(`(Add String to from function)`)
+        return child()
       } else if (typeof child.render === 'function') {
-        output = child.render()
-        console.log(`[Add String to File from child.render]: ${output}`)
+        console.log(`(Add String to from child.render)`)
+        return child.render()
+      } else if (typeof child.text !== 'undefined') {
+        return child.text
       } else {
         invariant(false, `File Could not render: ${child}`)
-      }
-      this.contents.push(output)
+      }      
     })
   }
 
   render(parentPath) {
     invariant(typeof this.name !== 'undefined', 'File node was not provided props.path')    
     const path = nodePath.join(parentPath, this.name)
-    this.renderChildren()
+    const contents = this.renderChildren2()
+    console.log("contents", contents)
+    
     console.log(`[Render file with name:] ${path}`)
-    console.log(`  ${this.contents.join('\n  ')}`)
+    console.log(`  ${contents.join('\n  ')}`)
+    return contents;
   }
 
 }

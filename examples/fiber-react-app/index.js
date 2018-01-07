@@ -23,15 +23,25 @@ const Wrapper = ({ children }) => {
 
 const MakeSomeDirs = ({ names }) => names.map(name => <Dir key={name} name={name} />)
 
+// const App = (
+//   <File key="file-key" name="file">
+//     Contents as String 18
+//     <Text contents="Contents as attr to Text 10"/>
+//     Second Contents as string 11
+//   </File>
+// )
+
 const App = (
   <Dir key="outer-dir-key" name="outer_directory">
     <Dir key="inner-dir-key" name="inner_directory">
       <File key="file-key" name="file">
-        Contents as String 2
+        Contents as String
+        <Text contents="Contents as attr to Text"/>
+        More contents in a string
       </File>
-      {/* <Dir key="extra" name="extra" /> */}
-      {/* <Dir key="extra2" name="extra2" /> */}
-      {/* <Dir key="extra3" name="extra3" /> */}
+      <Dir key="extra" name="extra" />
+      <Dir key="extra2" name="extra2" />
+      <Dir key="extra3" name="extra3" />
       <Dir key="extra4" name="extra4" />
       <Dir key="extra5" name="extra5" />
       <Dir key="extra6" name="extra6" />
