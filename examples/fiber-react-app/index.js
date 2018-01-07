@@ -1,4 +1,4 @@
-const React = require('react');
+const React = require('react')
 const exuberant = require('../../src/fiber/index')
 
 const { Dir, File } = exuberant
@@ -13,15 +13,12 @@ class Foo extends React.Component {
   }
 }
 
-const Text = props => {
-  return props.contents || props.children
-}
+const Text = props => props.contents || props.children
 
-const Wrapper = ({ children }) => {
-  return children
-}
+const Wrapper = ({ children }) => children
 
-const MakeSomeDirs = ({ names }) => names.map(name => <Dir key={name} name={name} />)
+const MakeSomeDirs = ({ names }) =>
+  names.map(name => <Dir key={name} name={name} />)
 
 // const App = (
 //   <File key="file-key" name="file">
@@ -36,7 +33,7 @@ const App = (
     <Dir key="inner-dir-key" name="inner_directory">
       <File key="file-key" name="file">
         Contents as String
-        <Text contents="Contents as attr to Text"/>
+        <Text contents="Contents as attr to Text" />
         More contents in a string
       </File>
       <Dir key="extra" name="extra" />
@@ -149,7 +146,7 @@ module.exports = App
 //                     <div id="app"></div>
 //                     <script src="bundle.js"></script>
 //                 </body>
-//             </html>  
+//             </html>
 //           `}
 //         </Code>
 //       </File>
@@ -164,10 +161,10 @@ module.exports = App
 //           import Item from './components/Item'
 
 //           const data = ['red', 'green', 'blue', 'mauve']
-        
-//           const App = () => 
+
+//           const App = () =>
 //             <List name="Colors">
-//               {data.map((item) => 
+//               {data.map((item) =>
 //                 <li key={item}>{item}</li>
 //               )}
 //             </List>
@@ -182,7 +179,7 @@ module.exports = App
 //             {`
 //               import React from 'react'
 
-//               export default (props) =>                
+//               export default (props) =>
 //                 <div>
 //                   <h1>List of {props.name}</h1>
 //                   <ul>
@@ -197,7 +194,7 @@ module.exports = App
 //             {`
 //               import React from 'react'
 
-//               export default (props) =>                
+//               export default (props) =>
 //                 <li>
 //                   {props.children}
 //                 </li>

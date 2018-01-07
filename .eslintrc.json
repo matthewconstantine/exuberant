@@ -1,0 +1,72 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+        "airbnb",
+        "prettier"
+    ],
+    "env": {
+        "browser": false,
+        "node": true,
+        "jest": true,
+        "es6": true
+    },
+    "plugins": [
+        "react",
+        "prettier"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+        "semi": [
+            "error",
+            "never"
+        ],
+        "arrow-body-style": [
+            2,
+            "as-needed"
+        ],
+        "comma-dangle": [
+            2,
+            "always-multiline"
+        ],
+        "indent": [
+            2,
+            2,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "max-len": 0,
+        "newline-per-chained-call": 0,
+        "no-console": 1,
+        "no-use-before-define": 0,
+        "prefer-template": 2,
+        "class-methods-use-this": 0,
+        "react/forbid-prop-types": 0,
+        "react/jsx-indent": 0,
+        "react/prefer-stateless-function": 0,
+        "react/jsx-first-prop-new-line": [
+            2,
+            "multiline"
+        ],
+        "react/jsx-filename-extension": 0,
+        "react/jsx-no-target-blank": 0,
+        "react/require-extension": 0,
+        "react/self-closing-comp": 0,
+        "require-yield": 0,
+        "prettier/prettier": [
+            "error",
+            {
+                "semi": false,
+                "singleQuote": true,
+                "trailingComma": "es5",
+                "bracketSpacing": true
+            }
+        ]
+    }
+}
