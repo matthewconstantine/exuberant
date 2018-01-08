@@ -31,7 +31,7 @@ const MakeSomeDirs = ({ names }) =>
 const App = (
   <Dir key="outer-dir-key" name="outer_directory">
     <Dir key="inner-dir-key" name="inner_directory">
-      <File key="file-key" name="file2.js">
+      <File key="file-key" name="file3.js">
         Contents as String
         <Text contents="Contents as attr to Text" />
         More contents in a string

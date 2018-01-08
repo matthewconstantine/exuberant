@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/jest",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "build:example": "node examples/fiber-react-app/build.js",
     "watch:example": "node examples/fiber-react-app/build.js --watch",
     "debug:example": "node --inspect-brk examples/fiber-react-app/build.js --watch"

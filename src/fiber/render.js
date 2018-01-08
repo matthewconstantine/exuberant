@@ -7,7 +7,7 @@ import FileSystemRenderer from './FileSystemRenderer'
 
 const defaultLogger = console.log
 
-const renderElement = (element, outputPath) => {
+export const renderElement = (element, outputPath) => {
   const container = createElement('ROOT', { path: outputPath })
   const node = FileSystemRenderer.createContainer(container)
   FileSystemRenderer.updateContainer(element, node, null)
@@ -15,14 +15,15 @@ const renderElement = (element, outputPath) => {
   return { container, node }
 }
 
-const rerenderElement = (element, container, node) => {
+export const rerenderElement = (element, state) => {
+  const { container, node } = state
   FileSystemRenderer.updateContainer(element, node, null)
   container.render()
 }
 
-const exuberantRender = (appPath, outputPath, options, log = defaultLogger) => { 
+export const render = (appPath, outputPath, options, log = defaultLogger) => {
   const element = require(appPath)
-  const { container, node } = renderElement(element, outputPath)
+  const state = renderElement(element, outputPath)
 
   if (options.watch) {
     log(`Watching... ${path.dirname(appPath)}`)
@@ -34,9 +35,7 @@ const exuberantRender = (appPath, outputPath, options, log = defaultLogger) => {
       log(`\n\nRebuilding. Detected change in ${displayPath}}`)
       decache(appPath)
       const updatedElement = require(appPath)
-      rerenderElement(updatedElement, container, node)
+      rerenderElement(updatedElement, state)
     })
   }
 }
-
-export default exuberantRender

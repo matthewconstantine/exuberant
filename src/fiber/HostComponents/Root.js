@@ -19,12 +19,6 @@ class Root {
     this.children.push(child)
   }
 
-  // Remove children
-  removeChild(child) {
-    const index = this.children.indexOf(child)
-    this.children.splice(index, 1)
-  }
-
   renderChildren(path) {
     this.children.forEach(child => {
       invariant(

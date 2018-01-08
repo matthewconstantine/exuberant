@@ -8,6 +8,7 @@ class File {
   constructor(root, props) {  
     this.name = props.name
     this.children = []
+    this.rename = null
   }
 
   appendChild(child) {
@@ -21,6 +22,8 @@ class File {
     this.children.splice(index, 1)
   }
 
+  // TODO: This might not be necessary anymore. React doesn't seem to be calling it
+  // now that we represent `text` as `{ text }` objects
   insertBefore(child, beforeChild) {
     const index = this.children.indexOf(beforeChild)
     this.children.splice(index, 0, child)
@@ -40,22 +43,14 @@ class File {
     }
   }
 
+  removeSelf(parentPath) {
+    const path = nodePath.join(parentPath, this.name)
+    console.log(`[Removing file:] ${path}`)
+    fs.removeSync(path)
+  }
+
   renderChildren() {
-    return this.children.map(child => {
-      if (typeof child === 'string') {
-        console.log(`(Adding String): ${child}`)
-        return child
-      } else if (typeof child === 'function') {
-        console.log(`(Add String to from function)`)
-        return child()
-      } else if (typeof child.render === 'function') {
-        console.log(`(Add String to from child.render)`)
-        return child.render()
-      } else if (typeof child.text !== 'undefined') {
-        return child.text
-      }
-      invariant(false, `File Could not render: ${child}`)
-    })
+    return this.children.map(child => child.text)
   }
 
   // TODO: This could be optimized for updates with both a new name and contents

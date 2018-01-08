@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render Dir Creates itself 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/shasta",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/shasta": true,
+  },
+}
+`;
+
+exports[`Render Dir Deletes itself 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/wrapper",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/wrapper/deleteMe",
+    },
+    Object {
+      "action": "removeSync",
+      "path": "output/wrapper/deleteMe",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/wrapper": true,
+  },
+}
+`;
+
+exports[`Render Dir Renames itself 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/shasta",
+    },
+    Object {
+      "action": "renameSync",
+      "newPath": "output/faye",
+      "oldPath": "output/shasta",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/faye": true,
+  },
+}
+`;
+
+exports[`Render Dir Throws when no name is provided 1`] = `"Dir does not have props.name"`;
+
+exports[`Render File Creates a file 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Sportello": "",
+  },
+}
+`;
+
+exports[`Render File Deletes a file 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/wrapper",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "removeSync",
+      "path": "output/wrapper/deleteMe",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/wrapper": true,
+  },
+}
+`;
+
+exports[`Render File Deletes multi-child text 1`] = `"Text"`;
+
+exports[`Render File Deletes plain text 1`] = `""`;
+
+exports[`Render File Mutates plain text 1`] = `"Whats that?"`;
+
+exports[`Render File Renames a file 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "renameSync",
+      "newPath": "output/Sportello",
+      "oldPath": "output/Doc",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Sportello": "",
+  },
+}
+`;
+
+exports[`Render File Renders plain text 1`] = `"Ahhh!"`;
+
+exports[`Render File Reorders multi-child text 1`] = `
+"First
+Third
+Second"
+`;
+
+exports[`Render File Throws when no name is provided 1`] = `"File node was not provided props.name"`;
