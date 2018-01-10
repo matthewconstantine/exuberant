@@ -101,7 +101,7 @@ const FileSystemRenderer = Reconciler({
     },
 
     commitUpdate(instance, updatePayload, type, oldProps, newProps) {
-      console.log('ff commitUpdate', { type, oldProps, newProps })
+      // console.log('ff commitUpdate', { type, oldProps, newProps })
       if (instance.commitUpdate) {
         instance.commitUpdate(oldProps, newProps)
       }

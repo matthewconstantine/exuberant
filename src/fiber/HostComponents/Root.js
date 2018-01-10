@@ -7,7 +7,6 @@ const CREATED = 'CREATED'
 // TODO: remove anything that isn't essential
 class Root {
   constructor(root, props) {
-    console.log('Root props', props)
     // TODO: refactor out this.props and set this.name and this.path directly
     this.props = props
     this.children = []

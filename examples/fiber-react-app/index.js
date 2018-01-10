@@ -1,68 +1,20 @@
 const React = require('react')
 const exuberant = require('../../src/fiber/index')
 
-const { Dir, File } = exuberant
-
-class Foo extends React.Component {
-  componentWillMount() {
-    console.log('Foo componentWillMount')
-  }
-
-  render() {
-    return this.props.contents
-  }
-}
-
-const Text = props => props.contents || props.children
-
-const Wrapper = ({ children }) => children
-
-const MakeSomeDirs = ({ names }) =>
-  names.map(name => <Dir key={name} name={name} />)
-
-// const App = (
-//   <File key="file-key" name="file">
-//     Contents as String 18
-//     <Text contents="Contents as attr to Text 10"/>
-//     Second Contents as string 11
-//   </File>
-// )
-
 const App = (
-  <Dir key="outer-dir-key" name="outer_directory">
-    <Dir key="inner-dir-key" name="inner_directory">
-      <File key="file-key" name="file3.js">
-        Contents as String
-        <Text contents="Contents as attr to Text" />
-        More contents in a string
-      </File>
-      <Dir key="extra" name="extra" />
-      <Dir key="extra2" name="extra2" />
-      <Dir key="extra3" name="extra3" />
-      <Dir key="extra7" name="extra7" />
-    </Dir>
-  </Dir>
+  <project>
+    <file name="package.json" />
+    
+  </project>
 )
 
-// const App = (
-//   <Dir key="outer-dir-key" name="outer_directory">
-//     <Dir key="inner-dir-key" name="inner_directory">
-//       <File key="file-key" name="file">
-//         Contents as String
-//         <Foo key="foo-key" contents="Content from Component" />
-//         <Text key="text-key" contents="Content from stateless Component" />
-//         <Wrapper key="wrapper-key">
-//           <Text>Some fooooooo text within some JSX</Text>
-//         </Wrapper>
-//       </File>
-//       <MakeSomeDirs key="makedirs-key" names={ ['one', 'two', 'three'] } />
-//     </Dir>
-//   </Dir>
+// const App = React.createElement(
+//   'PROJECT',
+//   null,
+//   React.createElement('FILE', { name: 'package.json' })
 // )
 
-module.exports = App
-
-// module.exports = buildTree(
+// const App = (
 //   <Project>
 //     <File name="package.json">
 //       <Code>
@@ -203,3 +155,5 @@ module.exports = App
 //     </Dir>
 //   </Project>
 // )
+
+module.exports = App
