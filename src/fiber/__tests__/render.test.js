@@ -1,6 +1,6 @@
 import React from 'react'
 import fs from 'fs-extra'
-import { renderElement, rerenderElement, Dir, File } from '../'
+import { renderElement, rerenderElement } from '../'
 
 const renderChange = (oldElement, newElement) =>
   rerenderElement(newElement, renderElement(oldElement, 'output'))
@@ -10,33 +10,33 @@ const Text = ({ children }) => (children.join ? children.join('\n') : children)
 describe('Render', () => {
   beforeEach(() => fs.resetMock())
 
-  describe('Dir', () => {
+  describe('dir', () => {
     it('Creates itself', () => {
-      const element = <Dir name="shasta" />
+      const element = <dir name="shasta" />
       renderElement(element, 'output')
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
     it('Renames itself', () => {
-      const first = <Dir name="shasta" />
-      const second = <Dir name="faye" />
+      const first = <dir name="shasta" />
+      const second = <dir name="faye" />
       renderChange(first, second)
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
     it('Deletes itself', () => {
       const first = (
-        <Dir name="wrapper">
-          <Dir name="deleteMe" />
-        </Dir>
+        <dir name="wrapper">
+          <dir name="deleteMe" />
+        </dir>
       )
-      const second = <Dir name="wrapper" />
+      const second = <dir name="wrapper" />
       renderChange(first, second)
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
     it('Throws when no name is provided', () => {
-      const element = <Dir />
+      const element = <dir />
       const shouldError = () => {
         renderElement(element, 'output')
       }
@@ -46,31 +46,31 @@ describe('Render', () => {
 
   describe('File', () => {
     it('Creates a file', () => {
-      const element = <File name="Sportello" />
+      const element = <file name="Sportello" />
       renderElement(element, 'output')
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
     it('Renames a file', () => {
-      const first = <File name="Doc" />
-      const second = <File name="Sportello" />
+      const first = <file name="Doc" />
+      const second = <file name="Sportello" />
       renderChange(first, second)
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
     it('Deletes a file', () => {
       const first = (
-        <Dir name="wrapper">
-          <File name="deleteMe" />
-        </Dir>
+        <dir name="wrapper">
+          <file name="deleteMe" />
+        </dir>
       )
-      const second = <Dir name="wrapper" />
+      const second = <dir name="wrapper" />
       renderChange(first, second)
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
     it('Throws when no name is provided', () => {
-      const element = <File />
+      const element = <file />
       const shouldError = () => {
         renderElement(element, 'output')
       }
@@ -78,36 +78,36 @@ describe('Render', () => {
     })
 
     it('Renders plain text', () => {
-      const element = <File name="Sportello">Ahhh!</File>
+      const element = <file name="Sportello">Ahhh!</file>
       renderElement(element, 'output')
       expect(fs.getPath('output/Sportello')).toMatchSnapshot()
     })
 
     it('Mutates plain text', () => {
-      const first = <File name="Sportello">Ahhh!</File>
-      const second = <File name="Sportello">Whats that?</File>
+      const first = <file name="Sportello">Ahhh!</file>
+      const second = <file name="Sportello">Whats that?</file>
       renderChange(first, second)
       expect(fs.getPath('output/Sportello')).toMatchSnapshot()
     })
 
     it('Deletes plain text', () => {
-      const first = <File name="Sportello">Ahhh!</File>
-      const second = <File name="Sportello" />
+      const first = <file name="Sportello">Ahhh!</file>
+      const second = <file name="Sportello" />
       renderChange(first, second)
       expect(fs.getPath('output/Sportello')).toMatchSnapshot()
     })
 
     it('Deletes multi-child text', () => {
       const first = (
-        <File name="Sportello">
+        <file name="Sportello">
           <Text>Text</Text>
           <Text>deleteMe</Text>
-        </File>
+        </file>
       )
       const second = (
-        <File name="Sportello">
+        <file name="Sportello">
           <Text>Text</Text>
-        </File>
+        </file>
       )
       renderChange(first, second)
       expect(fs.getPath('output/Sportello')).toMatchSnapshot()
@@ -115,18 +115,18 @@ describe('Render', () => {
 
     it('Reorders multi-child text', () => {
       const first = (
-        <File name="Sportello">
+        <file name="Sportello">
           <Text>First</Text>
           <Text>Second</Text>
           <Text>Third</Text>
-        </File>
+        </file>
       )
       const second = (
-        <File name="Sportello">
+        <file name="Sportello">
           <Text>First</Text>
           <Text>Third</Text>
           <Text>Second</Text>
-        </File>
+        </file>
       )
       renderChange(first, second)
       expect(fs.getPath('output/Sportello')).toMatchSnapshot()

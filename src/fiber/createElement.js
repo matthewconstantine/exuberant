@@ -1,4 +1,5 @@
 import Root from './HostComponents/Root'
+import Project from './HostComponents/Project'
 import Dir from './HostComponents/Dir'
 import File from './HostComponents/File'
 
@@ -9,12 +10,11 @@ import File from './HostComponents/File'
  * @param {Object} root Root instance
  */
 function createElement(type, props, root) {
-  // console.log('CreateElement: ', {type, props, root})
-
   const COMPONENTS = {
     ROOT: () => new Root(root, props),
-    DIR: () => new Dir(root, props),
-    FILE: () => new File(root, props),
+    project: () => new Project(root),
+    dir: () => new Dir(root, props),
+    file: () => new File(root, props),
     default: undefined,
   }
 

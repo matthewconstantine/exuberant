@@ -1,77 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render Dir Creates itself 1`] = `
-Object {
-  "ledger": Array [
-    Object {
-      "action": "ensureDirSync",
-      "path": "output",
-    },
-    Object {
-      "action": "ensureDirSync",
-      "path": "output/shasta",
-    },
-  ],
-  "volume": Object {
-    "output": true,
-    "output/shasta": true,
-  },
-}
-`;
-
-exports[`Render Dir Deletes itself 1`] = `
-Object {
-  "ledger": Array [
-    Object {
-      "action": "ensureDirSync",
-      "path": "output",
-    },
-    Object {
-      "action": "ensureDirSync",
-      "path": "output/wrapper",
-    },
-    Object {
-      "action": "ensureDirSync",
-      "path": "output/wrapper/deleteMe",
-    },
-    Object {
-      "action": "removeSync",
-      "path": "output/wrapper/deleteMe",
-    },
-  ],
-  "volume": Object {
-    "output": true,
-    "output/wrapper": true,
-  },
-}
-`;
-
-exports[`Render Dir Renames itself 1`] = `
-Object {
-  "ledger": Array [
-    Object {
-      "action": "ensureDirSync",
-      "path": "output",
-    },
-    Object {
-      "action": "ensureDirSync",
-      "path": "output/shasta",
-    },
-    Object {
-      "action": "renameSync",
-      "newPath": "output/faye",
-      "oldPath": "output/shasta",
-    },
-  ],
-  "volume": Object {
-    "output": true,
-    "output/faye": true,
-  },
-}
-`;
-
-exports[`Render Dir Throws when no name is provided 1`] = `"Dir does not have props.name"`;
-
 exports[`Render File Creates a file 1`] = `
 Object {
   "ledger": Array [
@@ -161,3 +89,75 @@ Second"
 `;
 
 exports[`Render File Throws when no name is provided 1`] = `"File node was not provided props.name"`;
+
+exports[`Render dir Creates itself 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/shasta",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/shasta": true,
+  },
+}
+`;
+
+exports[`Render dir Deletes itself 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/wrapper",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/wrapper/deleteMe",
+    },
+    Object {
+      "action": "removeSync",
+      "path": "output/wrapper/deleteMe",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/wrapper": true,
+  },
+}
+`;
+
+exports[`Render dir Renames itself 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/shasta",
+    },
+    Object {
+      "action": "renameSync",
+      "newPath": "output/faye",
+      "oldPath": "output/shasta",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/faye": true,
+  },
+}
+`;
+
+exports[`Render dir Throws when no name is provided 1`] = `"Dir does not have props.name"`;
