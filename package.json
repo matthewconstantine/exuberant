@@ -6,9 +6,10 @@
   "scripts": {
     "test": "./node_modules/.bin/jest",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
-    "build:example": "node examples/fiber-react-app/build.js",
+    "build:example": "npm run reset:example && node examples/fiber-react-app/build.js",
     "watch:example": "node examples/fiber-react-app/build.js --watch",
-    "debug:example": "node --inspect-brk examples/fiber-react-app/build.js --watch"
+    "debug:example": "node --inspect-brk examples/fiber-react-app/build.js --watch",
+    "reset:example": "rm -rf examples/fiber-react-app/output"
   },
   "author": "Matthew Constantine <designmc@gmail.com>",
   "license": "MIT",
@@ -49,6 +50,7 @@
   "jest": {
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
-    }
+    },
+    "modulePathIgnorePatterns": ["<rootDir>/examples/"]
   }
 }
