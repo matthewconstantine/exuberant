@@ -80,6 +80,50 @@ Object {
 }
 `;
 
+exports[`Render File Renames a file and retains the correct name 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "renameSync",
+      "newPath": "output/Sportello",
+      "oldPath": "output/Doc",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Sportello": "",
+  },
+}
+`;
+
 exports[`Render File Renders plain text 1`] = `"Ahhh!"`;
 
 exports[`Render File Reorders multi-child text 1`] = `

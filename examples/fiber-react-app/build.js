@@ -2,7 +2,7 @@
 // TODO: figure out how to not put this here
 require('babel-core/register')({ presets: ['env', 'react', 'stage-2'] })
 const path = require('path')
-const exuberant = require('../../src/fiber/index')
+const exuberant = require('../../src/index')
 
 const { render } = exuberant
 

@@ -18,6 +18,13 @@ class Root {
     this.children.push(child)
   }
 
+  // Called by FileSystemRenderer
+  removeChild(child) {
+    const index = this.children.indexOf(child)
+    this.children.splice(index, 1)
+    this.childrenToDelete.push(child)
+  }
+
   renderChildren(path) {
     this.children.forEach(child => {
       invariant(

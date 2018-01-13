@@ -10,7 +10,7 @@ const FileSystemRenderer = Reconciler({
   },
 
   createInstance(type, props, internalInstanceHandle /* , fiberNode */) {
-    // console.log('a createInstance', (arguments))
+    // console.log('a createInstance', (arguments)); debugger
     return createElement(type, props, internalInstanceHandle)
   },
 
@@ -20,51 +20,51 @@ const FileSystemRenderer = Reconciler({
     internalInstanceHandle,
     fiberNode */
   ) {
-    // console.log('b createTextInstance', (arguments))
+    // console.log('b createTextInstance', (arguments)); debugger
     return { text }
   },
 
   finalizeInitialChildren(/* instance, type, props */) {
-    // console.log('c finalizeInitialChildren', (arguments))
+    // console.log('c finalizeInitialChildren', (arguments)); debugger
     return false
   },
 
   getPublicInstance(inst) {
-    // console.log('d getPublicInstance', (arguments))
+    // console.log('d getPublicInstance', (arguments)); debugger
     return inst
   },
 
   prepareForCommit() {
-    // console.log('e prepareForCommit', (arguments))
+    // console.log('e prepareForCommit', (arguments)); debugger
     // noop
   },
 
   prepareUpdate(/* instance, type, oldProps, newProps */) {
-    // console.log('f prepareUpdate', (arguments))
+    // console.log('f prepareUpdate', (arguments)); debugger
     return true // appears in commitUpdate as the updatePayload argument
   },
 
   resetAfterCommit() {
-    // console.log('g resetAfterCommit', (arguments))
+    // console.log('g resetAfterCommit', (arguments)); debugger
     // noop
   },
 
   resetTextContent(/* instance */) {
-    // console.log('h resetTextContent', (arguments))
+    // console.log('h resetTextContent', (arguments)); debugger
     // noop
   },
 
   getRootHostContext(/* rootInstance */) {
-    // console.log('i getRootHostContext', (arguments))
+    // console.log('i getRootHostContext', (arguments)); debugger
   },
 
   getChildHostContext() {
-    // console.log('j getChildHostContext', (arguments))
+    // console.log('j getChildHostContext', (arguments)); debugger
     return emptyObject
   },
 
   shouldSetTextContent(/* type, props */) {
-    // console.log('k shouldSetTextContent', (arguments))
+    // console.log('k shouldSetTextContent', (arguments)); debugger
     return false
   },
 
@@ -74,47 +74,47 @@ const FileSystemRenderer = Reconciler({
 
   mutation: {
     appendChild(parentInstance, child) {
-      // console.log('aa appendChild', (arguments))
+      // console.log('aa appendChild', (arguments)); debugger
       parentInstance.appendChild(child)
     },
 
     appendChildToContainer(parentInstance, child) {
-      // console.log('bb appendChildToContainer', (arguments))
+      // console.log('bb appendChildToContainer', (arguments)); debugger
       parentInstance.appendChild(child)
+      // TODO: ReactDOM does container.appendChild(child) instead
     },
 
     removeChild(parentInstance, child) {
-      // console.log('cc removeChild', (arguments))
+      // console.log('cc removeChild', (arguments)); debugger
       parentInstance.removeChild(child)
     },
 
     removeChildFromContainer(parentInstance, child) {
-      // console.log('dd removeChildFromContainer', (arguments))
+      // console.log('dd removeChildFromContainer', (arguments)); debugger
       parentInstance.removeChild(child)
+      // TODO: ReactDOM does container.removeChild(child);
     },
 
     insertBefore(parentInstance, child, beforeChild) {
-      // console.log('ee insertBefore', (arguments))
-      if (parentInstance.insertBefore) {
-        parentInstance.insertBefore(child, beforeChild)
-      }
+      // console.log('ee insertBefore', (arguments)); debugger
+      parentInstance.insertBefore(child, beforeChild)
     },
 
     commitUpdate(instance, updatePayload, type, oldProps, newProps) {
-      // console.log('ff commitUpdate', { type, oldProps, newProps })
+      // console.log('ff commitUpdate', { type, oldProps, newProps }); debugger
       if (instance.commitUpdate) {
         instance.commitUpdate(oldProps, newProps)
       }
     },
 
     commitMount(/* instance, updatePayload, type, oldProps, newProps */) {
-      // console.log('gg commitMount', (arguments))
+      // console.log('gg commitMount', (arguments)); debugger
       // noop
     },
 
     /* eslint-disable no-param-reassign */
     commitTextUpdate(textInstance, oldText, newText) {
-      // console.log('hh commitTextUpdate', (arguments))
+      // console.log('hh commitTextUpdate', (arguments)); debugger
       textInstance.text = newText
     },
   },

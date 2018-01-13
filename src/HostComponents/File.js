@@ -5,19 +5,20 @@ import fs from 'fs-extra'
 // by the renderer (render.js) and updated by the reconciler (FileSystemRenderer)
 
 class File {
-  constructor(root, props) {  
+  constructor(root, props) {
+    // console.log('(construct File)', arguments)
     this.name = props.name
     this.children = []
     this.rename = null
   }
 
   appendChild(child) {
-    console.log('(File appendChild)', child)
+    // console.log('(File appendChild)', child)
     this.children.push(child)
   }
 
   removeChild(child) {
-    console.log('(File removeChild)', child)
+    // console.log('(File removeChild)', child)
     const index = this.children.indexOf(child)
     this.children.splice(index, 1)
   }
@@ -65,6 +66,7 @@ class File {
       path = nodePath.join(parentPath, this.rename.new)
       console.log(`[Rename File]: \n  from: ${oldFilePath}\n  to: ${path}`)
       fs.renameSync(oldFilePath, path)
+      this.name = this.rename.new
       this.rename = null
     } else {
       path = nodePath.join(parentPath, this.name)

@@ -58,6 +58,15 @@ describe('Render', () => {
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
+    it('Renames a file and retains the correct name', () => {
+      const first = <file name="Doc" />
+      const second = <file name="Sportello" />
+      renderChange(first, second)
+      renderElement(second, 'output')
+      renderElement(second, 'output')
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+
     it('Deletes a file', () => {
       const first = (
         <dir name="wrapper">
