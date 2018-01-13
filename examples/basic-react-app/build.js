@@ -1,14 +1,12 @@
 #!/usr/bin/env node
-require('babel-core/register')({  presets: ['es2015', 'react'] })
+// TODO: figure out how to not put this here
+require('babel-core/register')({ presets: ['env', 'react', 'stage-2'] })
 const path = require('path')
 const exuberant = require('../../src/index')
-const { build } = exuberant
 
-build(
-  path.join(__dirname, 'index'), 
-  path.join(__dirname, 'output'),
-  { 
-    watch: process.argv.includes('--watch'),
-    debug: process.argv.includes('--debug'),
-  }
-)
+const { render } = exuberant
+
+render(path.join(__dirname, 'index'), path.join(__dirname, 'output'), {
+  watch: process.argv.includes('--watch'),
+  debug: process.argv.includes('--debug'),
+})

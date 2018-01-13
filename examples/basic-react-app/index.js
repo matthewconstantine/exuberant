@@ -1,11 +1,9 @@
-const React = require('react');
-const exuberant = require('../../src/index')
+import React from 'react'
+import { Code } from '../../src'
 
-const { Project, Dir, File, Code, buildTree } = exuberant
-
-module.exports = buildTree(
-  <Project>
-    <File name="package.json">
+const App = (
+  <project>
+    <file name="package.json">
       <Code>
         {`
           {
@@ -42,8 +40,8 @@ module.exports = buildTree(
           }
         `}
       </Code>
-    </File>
-    <File name="webpack.config.js">
+    </file>
+    <file name="webpack.config.js">
       <Code>
         {`
           module.exports = {
@@ -71,9 +69,9 @@ module.exports = buildTree(
           };
         `}
       </Code>
-    </File>
-    <Dir name="dist">
-      <File name="index.html">
+    </file>
+    <dir name="dist">
+      <file name="index.html">
         <Code>
           {`
             <!DOCTYPE html>
@@ -85,13 +83,13 @@ module.exports = buildTree(
                     <div id="app"></div>
                     <script src="bundle.js"></script>
                 </body>
-            </html>  
+            </html>
           `}
         </Code>
-      </File>
-    </Dir>
-    <Dir name="src">
-      <File name="index.js">
+      </file>
+    </dir>
+    <dir name="src">
+      <file name="index.js">
         <Code>
           {`
           import React from 'react'
@@ -100,10 +98,10 @@ module.exports = buildTree(
           import Item from './components/Item'
 
           const data = ['red', 'green', 'blue', 'mauve']
-        
-          const App = () => 
+
+          const App = () =>
             <List name="Colors">
-              {data.map((item) => 
+              {data.map((item) =>
                 <li key={item}>{item}</li>
               )}
             </List>
@@ -111,14 +109,14 @@ module.exports = buildTree(
           ReactDOM.render(<App />, document.getElementById('app'));
           `}
         </Code>
-      </File>
-      <Dir name="components">
-        <File name="List.js">
+      </file>
+      <dir name="components">
+        <file name="List.js">
           <Code>
             {`
               import React from 'react'
 
-              export default (props) =>                
+              export default (props) =>
                 <div>
                   <h1>List of {props.name}</h1>
                   <ul>
@@ -127,20 +125,22 @@ module.exports = buildTree(
                 </div>
             `}
           </Code>
-        </File>
-        <File name="Item.js">
+        </file>
+        <file name="Item.js">
           <Code>
             {`
               import React from 'react'
 
-              export default (props) =>                
+              export default (props) =>
                 <li>
                   {props.children}
                 </li>
             `}
           </Code>
-        </File>
-      </Dir>
-    </Dir>
-  </Project>
+        </file>
+      </dir>
+    </dir>
+  </project>
 )
+
+export default App
