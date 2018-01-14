@@ -22,7 +22,8 @@ export const rerenderElement = (element, state) => {
 }
 
 export const render = (appPath, outputPath, options, log = defaultLogger) => {
-  const element = require(appPath)
+  const app = require(appPath)
+  const element = app.default
   const state = renderElement(element, outputPath)
 
   if (options.watch) {
@@ -34,7 +35,8 @@ export const render = (appPath, outputPath, options, log = defaultLogger) => {
       const displayPath = path.relative(process.cwd(), changePath)
       log(`\n\nRebuilding. Detected change in ${displayPath}}`)
       decache(appPath)
-      const updatedElement = require(appPath)
+      const updatedApp = require(appPath)
+      const updatedElement = updatedApp.default
       rerenderElement(updatedElement, state)
     })
   }
