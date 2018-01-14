@@ -1,7 +1,4 @@
-module.exports = {
-  buildTree: require('./buildTree'),
-  saveToFileSystem: require('./saveToFileSystem'),
-  Dir: require('./components/Dir'),
-  File: require('./components/File'),
-  Project: require('./components/Project'),
-}
+import Code from './components/Code'
+import { render, renderElement, rerenderElement } from './render'
+
+export { render, renderElement, rerenderElement, Code }
