@@ -1,20 +1,25 @@
 import invariant from 'invariant'
 import nodePath from 'path'
-import fs from 'fs-extra'
 
 // Note: This is a host component not a React component. It's created
 // by the renderer (render.js) and updated by the reconciler (FileSystemRenderer)
 
-const NEW = 'NEW'
-const CREATED = 'CREATED'
+// const NEW = 'NEW'
+// const CREATED = 'CREATED'
 
-class Dir {
-  constructor(root, props) {
+class HostComponent {
+  constructor(root, props, options) {
     this.props = props
     this.children = []
-    this.rename = null
     this.childrenToDelete = []
-    this.status = NEW
+    this.rename = null
+    // this.status = NEW
+    this.onRename = options.onRename
+    this.onRenderChildren = options.onRenderChildren
+    this.onCreate = options.onCreate
+    this.onCreateWithContents = options.onCreateWithContents
+    this.onDelete = options.onDelete
+    this.type = options.type
   }
 
   // Called by FileSystemRenderer
@@ -29,6 +34,11 @@ class Dir {
     this.childrenToDelete.push(child)
   }
 
+  insertBefore(child, beforeChild) {
+    const index = this.children.indexOf(beforeChild)
+    this.children.splice(index, 0, child)
+  }
+
   // Called from within the render loop (because only it knows the parentPath)
   removeDeletedChildren(parentPath) {
     this.childrenToDelete.forEach(
@@ -39,8 +49,8 @@ class Dir {
 
   removeSelf(parentPath) {
     const path = nodePath.join(parentPath, this.props.name)
-    console.log(`[Remove Directory]: ${path}`)
-    fs.removeSync(path)
+    console.log(`[Remove ${this.type}]: ${path}`)
+    this.onDelete(path)
   }
 
   commitUpdate(oldProps, newProps) {
@@ -50,22 +60,11 @@ class Dir {
         new: newProps.name,
       }
       console.log(
-        `(Rename Directory Prepared): \n  from: ${oldProps.name}\n  to: ${
+        `(Rename ${this.type} Prepared): \n  from: ${oldProps.name}\n  to: ${
           newProps.name
         }`
       )
     }
-  }
-
-  renderChildren(path) {
-    this.removeDeletedChildren(path)
-    this.children.forEach(child => {
-      invariant(
-        typeof child.render === 'function',
-        `Dir can only render components with a render method. Found \`${child}\` instead.`
-      )
-      child.render(path)
-    })
   }
 
   render(parentPath) {
@@ -75,25 +74,26 @@ class Dir {
       'props.path was not passed down from parent'
     )
     invariant(
-      typeof this.props.name !== 'undefined',
-      'Dir does not have props.name'
+      typeof this.props.name !== 'undefined' || this.type === 'PROJECT',
+      `${this.type} does not have props.name`
     )
     if (this.rename) {
       const oldFilePath = nodePath.join(parentPath, this.rename.old)
       path = nodePath.join(parentPath, this.rename.new)
-      console.log(`[Rename Directory]: \n  from: ${oldFilePath}\n  to: ${path}`)
-      fs.renameSync(oldFilePath, path)
+      console.log(
+        `[Rename ${this.type}]: \n  from: ${oldFilePath}\n  to: ${path}`
+      )
+      this.onRename(oldFilePath, path)
       this.rename = null
     } else {
-      path = nodePath.join(parentPath, this.props.name)
-      if (this.status === NEW) {
-        console.log(`[Create Directory]: `, path)
-        fs.ensureDirSync(path)
-      }
-      this.status = CREATED
+      path = nodePath.join(parentPath, this.props.name || '')
     }
-    this.renderChildren(path)
+    this.removeDeletedChildren(path)
+    console.log(`[Create ${this.type}]: `, path)
+    if (this.onCreate) this.onCreate(path)
+    const contents = this.onRenderChildren(this.children, path)
+    if (this.onCreateWithContents) this.onCreateWithContents(path, contents)
   }
 }
 
-export default Dir
+export default HostComponent

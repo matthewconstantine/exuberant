@@ -1,7 +1,6 @@
-import Root from './HostComponents/Root'
-import Project from './HostComponents/Project'
-import Dir from './HostComponents/Dir'
-import File from './HostComponents/File'
+import project from './HostComponents/project'
+import dir from './HostComponents/dir'
+import file from './HostComponents/file'
 
 /**
  * Creates a HostComponent instance
@@ -11,10 +10,10 @@ import File from './HostComponents/File'
  */
 function createElement(type, props, root) {
   const COMPONENTS = {
-    ROOT: () => new Root(root, props),
-    project: () => new Project(root),
-    dir: () => new Dir(root, props),
-    file: () => new File(root, props),
+    ROOT: () => dir(root, props),
+    project: () => project(root, props),
+    dir: () => dir(root, props),
+    file: () => file(root, props),
     default: undefined,
   }
 
