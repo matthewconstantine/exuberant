@@ -10,6 +10,7 @@ Object {
     Object {
       "action": "writeFileSync",
       "contents": "",
+      "path": "output/Sportello",
     },
   ],
   "volume": Object {
@@ -33,10 +34,15 @@ Object {
     Object {
       "action": "writeFileSync",
       "contents": "",
+      "path": "output/wrapper/deleteMe",
     },
     Object {
       "action": "removeSync",
       "path": "output/wrapper/deleteMe",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/wrapper",
     },
   ],
   "volume": Object {
@@ -62,6 +68,7 @@ Object {
     Object {
       "action": "writeFileSync",
       "contents": "",
+      "path": "output/Doc",
     },
     Object {
       "action": "renameSync",
@@ -71,6 +78,7 @@ Object {
     Object {
       "action": "writeFileSync",
       "contents": "",
+      "path": "output/Sportello",
     },
   ],
   "volume": Object {
@@ -90,6 +98,7 @@ Object {
     Object {
       "action": "writeFileSync",
       "contents": "",
+      "path": "output/Doc",
     },
     Object {
       "action": "renameSync",
@@ -99,6 +108,7 @@ Object {
     Object {
       "action": "writeFileSync",
       "contents": "",
+      "path": "output/Sportello",
     },
     Object {
       "action": "ensureDirSync",
@@ -107,6 +117,7 @@ Object {
     Object {
       "action": "writeFileSync",
       "contents": "",
+      "path": "output/Sportello",
     },
     Object {
       "action": "ensureDirSync",
@@ -115,6 +126,7 @@ Object {
     Object {
       "action": "writeFileSync",
       "contents": "",
+      "path": "output/Sportello",
     },
   ],
   "volume": Object {
@@ -132,7 +144,7 @@ Third
 Second"
 `;
 
-exports[`Render File Throws when no name is provided 1`] = `"File node was not provided props.name"`;
+exports[`Render File Throws when no name is provided 1`] = `"FILE does not have props.name"`;
 
 exports[`Render dir Creates itself 1`] = `
 Object {
@@ -172,6 +184,10 @@ Object {
       "action": "removeSync",
       "path": "output/wrapper/deleteMe",
     },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/wrapper",
+    },
   ],
   "volume": Object {
     "output": true,
@@ -196,6 +212,10 @@ Object {
       "newPath": "output/faye",
       "oldPath": "output/shasta",
     },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/faye",
+    },
   ],
   "volume": Object {
     "output": true,
@@ -204,4 +224,4 @@ Object {
 }
 `;
 
-exports[`Render dir Throws when no name is provided 1`] = `"Dir does not have props.name"`;
+exports[`Render dir Throws when no name is provided 1`] = `"DIR does not have props.name"`;

@@ -3,6 +3,7 @@ import { Code } from '../../src'
 
 const App = (
   <project>
+    <file name="foo.txt" />
     <file name="package.json">
       <Code>
         {`
