@@ -1,4 +1,3 @@
-import Root from './HostComponents/Root'
 import project from './HostComponents/project'
 import dir from './HostComponents/dir'
 import file from './HostComponents/file'
@@ -11,8 +10,7 @@ import file from './HostComponents/file'
  */
 function createElement(type, props, root) {
   const COMPONENTS = {
-    // ROOT: () => project(root, props),
-    ROOT: () => new Root(root, props),
+    ROOT: () => dir(root, props),
     project: () => project(root, props),
     dir: () => dir(root, props),
     file: () => file(root, props),

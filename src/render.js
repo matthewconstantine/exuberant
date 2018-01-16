@@ -12,13 +12,13 @@ export const renderElement = (element, outputPath) => {
   const node = FileSystemRenderer.createContainer(container)
   FileSystemRenderer.updateContainer(element, node, null)
   container.render(outputPath)
-  return { container, node }
+  return { container, node, outputPath }
 }
 
 export const rerenderElement = (element, state) => {
-  const { container, node } = state
+  const { container, node, outputPath } = state
   FileSystemRenderer.updateContainer(element, node, null)
-  container.render()
+  container.render(outputPath)
 }
 
 export const render = (appPath, outputPath, options, log = defaultLogger) => {
