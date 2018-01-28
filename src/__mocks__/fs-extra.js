@@ -20,7 +20,7 @@ export default {
 
   writeFileSync: (path, contents) => {
     volume[path] = contents
-    ledger.push({ action: 'writeFileSync', path, contents })
+    ledger.push({ action: 'writeFileSync', contents })
   },
 
   removeSync: path => {

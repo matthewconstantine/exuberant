@@ -8,17 +8,17 @@ import FileSystemRenderer from './FileSystemRenderer'
 const defaultLogger = console.log
 
 export const renderElement = (element, outputPath) => {
-  const container = createElement('ROOT', { path: outputPath, name: '' })
+  const container = createElement('ROOT', { path: outputPath })
   const node = FileSystemRenderer.createContainer(container)
   FileSystemRenderer.updateContainer(element, node, null)
-  container.render(outputPath)
-  return { container, node, outputPath }
+  container.render()
+  return { container, node }
 }
 
 export const rerenderElement = (element, state) => {
-  const { container, node, outputPath } = state
+  const { container, node } = state
   FileSystemRenderer.updateContainer(element, node, null)
-  container.render(outputPath)
+  container.render()
 }
 
 export const render = (appPath, outputPath, options, log = defaultLogger) => {
