@@ -24,8 +24,6 @@ export default {
   },
 
   removeSync: path => {
-    console.log("delete?", path)
-    debugger
     delete volume[path]
     ledger.push({ action: 'removeSync', path })
   },

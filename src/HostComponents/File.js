@@ -1,8 +1,6 @@
 import invariant from 'invariant'
 import nodePath from 'path'
 import fs from 'fs-extra'
-// Note: This is a host component not a React component. It's created
-// by the renderer (render.js) and updated by the reconciler (FileSystemRenderer)
 
 class File {
   constructor(root, props) {

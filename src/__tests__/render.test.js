@@ -1,6 +1,7 @@
 import React from 'react'
 import fs from 'fs-extra'
 import { renderElement, rerenderElement } from '../'
+import createElement from '../createElement'
 
 const renderChange = (oldElement, newElement) =>
   rerenderElement(newElement, renderElement(oldElement, 'output'))
@@ -10,7 +11,81 @@ const Text = ({ children }) => (children.join ? children.join('\n') : children)
 describe('Render', () => {
   beforeEach(() => fs.resetMock())
 
-  describe('dir', () => {
+  describe('<root>', () => {
+    it('Throws when no path is provided', () => {
+      const element = <root />
+      const shouldError = () => {
+        createElement(element, 'output')
+      }
+      expect(shouldError).toThrowErrorMatchingSnapshot()
+    })
+
+    it('Renames children', () => {
+      const before = <file name="Sportello" />
+      const after = <file name="Doc" />
+      renderChange(before, after)
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+
+    it('Removes children', () => {
+      const before = <file name="Sportello" />
+      const after = null
+      renderChange(before, after)
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+  })
+
+  describe('<project>', () => {
+    it('Creates itself', () => {
+      const element = <project />
+      renderElement(element, 'output')
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+
+    it('Adds children', () => {
+      const before = (
+        <project>
+          <file name="Sportello" />
+        </project>
+      )
+      const after = (
+        <project>
+          <file name="Sportello" />
+          <file name="Shasta" />
+        </project>
+      )
+      renderChange(before, after)
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+
+    it('Renames children', () => {
+      const before = (
+        <project>
+          <file name="Sportello" />
+        </project>
+      )
+      const after = (
+        <project>
+          <file name="Doc" />
+        </project>
+      )
+      renderChange(before, after)
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+
+    it('Removes children', () => {
+      const before = (
+        <project>
+          <file name="Sportello" />
+        </project>
+      )
+      const after = <project />
+      renderChange(before, after)
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+  })
+
+  describe('<dir>', () => {
     it('Creates itself', () => {
       const element = <dir name="shasta" />
       renderElement(element, 'output')
@@ -42,9 +117,52 @@ describe('Render', () => {
       }
       expect(shouldError).toThrowErrorMatchingSnapshot()
     })
+
+    it('Adds children', () => {
+      const before = (
+        <dir name="channel-estates">
+          <file name="Sportello" />
+        </dir>
+      )
+      const after = (
+        <dir name="channel-estates">
+          <file name="Sportello" />
+          <file name="Shasta" />
+        </dir>
+      )
+      renderChange(before, after)
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+
+    it('Renames children', () => {
+      const before = (
+        <dir name="channel-estates">
+          <file name="Sportello" />
+        </dir>
+      )
+      const after = (
+        <dir name="channel-estates">
+          <file name="Doc" />
+        </dir>
+      )
+      renderChange(before, after)
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+
+    it('Removes children', () => {
+      const before = (
+        <dir name="channel-estates">
+          <file name="Sportello" />
+        </dir>
+      )
+      const after = <dir name="channel-estates" />
+      renderChange(before, after)
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
   })
 
-  describe('File', () => {
+
+  describe('<file>', () => {
     it('Creates a file', () => {
       const element = <file name="Sportello" />
       renderElement(element, 'output')

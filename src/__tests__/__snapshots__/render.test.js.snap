@@ -1,25 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Render File Creates a file 1`] = `
-Object {
-  "ledger": Array [
-    Object {
-      "action": "ensureDirSync",
-      "path": "output",
-    },
-    Object {
-      "action": "writeFileSync",
-      "contents": "",
-    },
-  ],
-  "volume": Object {
-    "output": true,
-    "output/Sportello": "",
-  },
-}
-`;
-
-exports[`Render File Deletes a file 1`] = `
+exports[`Render <dir> Adds children 1`] = `
 Object {
   "ledger": Array [
     Object {
@@ -28,45 +9,15 @@ Object {
     },
     Object {
       "action": "ensureDirSync",
-      "path": "output/wrapper",
+      "path": "output/channel-estates",
     },
     Object {
       "action": "writeFileSync",
       "contents": "",
     },
     Object {
-      "action": "removeSync",
-      "path": "output/wrapper/deleteMe",
-    },
-  ],
-  "volume": Object {
-    "output": true,
-    "output/wrapper": true,
-  },
-}
-`;
-
-exports[`Render File Deletes multi-child text 1`] = `"Text"`;
-
-exports[`Render File Deletes plain text 1`] = `""`;
-
-exports[`Render File Mutates plain text 1`] = `"Whats that?"`;
-
-exports[`Render File Renames a file 1`] = `
-Object {
-  "ledger": Array [
-    Object {
-      "action": "ensureDirSync",
-      "path": "output",
-    },
-    Object {
       "action": "writeFileSync",
       "contents": "",
-    },
-    Object {
-      "action": "renameSync",
-      "newPath": "output/Sportello",
-      "oldPath": "output/Doc",
     },
     Object {
       "action": "writeFileSync",
@@ -75,66 +26,14 @@ Object {
   ],
   "volume": Object {
     "output": true,
-    "output/Sportello": "",
+    "output/channel-estates": true,
+    "output/channel-estates/Shasta": "",
+    "output/channel-estates/Sportello": "",
   },
 }
 `;
 
-exports[`Render File Renames a file and retains the correct name 1`] = `
-Object {
-  "ledger": Array [
-    Object {
-      "action": "ensureDirSync",
-      "path": "output",
-    },
-    Object {
-      "action": "writeFileSync",
-      "contents": "",
-    },
-    Object {
-      "action": "renameSync",
-      "newPath": "output/Sportello",
-      "oldPath": "output/Doc",
-    },
-    Object {
-      "action": "writeFileSync",
-      "contents": "",
-    },
-    Object {
-      "action": "ensureDirSync",
-      "path": "output",
-    },
-    Object {
-      "action": "writeFileSync",
-      "contents": "",
-    },
-    Object {
-      "action": "ensureDirSync",
-      "path": "output",
-    },
-    Object {
-      "action": "writeFileSync",
-      "contents": "",
-    },
-  ],
-  "volume": Object {
-    "output": true,
-    "output/Sportello": "",
-  },
-}
-`;
-
-exports[`Render File Renders plain text 1`] = `"Ahhh!"`;
-
-exports[`Render File Reorders multi-child text 1`] = `
-"First
-Third
-Second"
-`;
-
-exports[`Render File Throws when no name is provided 1`] = `"File node was not provided props.name"`;
-
-exports[`Render dir Creates itself 1`] = `
+exports[`Render <dir> Creates itself 1`] = `
 Object {
   "ledger": Array [
     Object {
@@ -153,7 +52,7 @@ Object {
 }
 `;
 
-exports[`Render dir Deletes itself 1`] = `
+exports[`Render <dir> Deletes itself 1`] = `
 Object {
   "ledger": Array [
     Object {
@@ -180,7 +79,67 @@ Object {
 }
 `;
 
-exports[`Render dir Renames itself 1`] = `
+exports[`Render <dir> Removes children 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/channel-estates",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "removeSync",
+      "path": "output/channel-estates/Sportello",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/channel-estates": true,
+  },
+}
+`;
+
+exports[`Render <dir> Renames children 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/channel-estates",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "renameSync",
+      "newPath": "output/channel-estates/Doc",
+      "oldPath": "output/channel-estates/Sportello",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/channel-estates": true,
+    "output/channel-estates/Doc": "",
+  },
+}
+`;
+
+exports[`Render <dir> Renames itself 1`] = `
 Object {
   "ledger": Array [
     Object {
@@ -204,4 +163,282 @@ Object {
 }
 `;
 
-exports[`Render dir Throws when no name is provided 1`] = `"Dir does not have props.name"`;
+exports[`Render <dir> Throws when no name is provided 1`] = `"Dir does not have props.name"`;
+
+exports[`Render <file> Creates a file 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Sportello": "",
+  },
+}
+`;
+
+exports[`Render <file> Deletes a file 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/wrapper",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "removeSync",
+      "path": "output/wrapper/deleteMe",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/wrapper": true,
+  },
+}
+`;
+
+exports[`Render <file> Deletes multi-child text 1`] = `"Text"`;
+
+exports[`Render <file> Deletes plain text 1`] = `""`;
+
+exports[`Render <file> Mutates plain text 1`] = `"Whats that?"`;
+
+exports[`Render <file> Renames a file 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "renameSync",
+      "newPath": "output/Sportello",
+      "oldPath": "output/Doc",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Sportello": "",
+  },
+}
+`;
+
+exports[`Render <file> Renames a file and retains the correct name 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "renameSync",
+      "newPath": "output/Sportello",
+      "oldPath": "output/Doc",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Sportello": "",
+  },
+}
+`;
+
+exports[`Render <file> Renders plain text 1`] = `"Ahhh!"`;
+
+exports[`Render <file> Reorders multi-child text 1`] = `
+"First
+Third
+Second"
+`;
+
+exports[`Render <file> Throws when no name is provided 1`] = `"File node was not provided props.name"`;
+
+exports[`Render <project> Adds children 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Shasta": "",
+    "output/Sportello": "",
+  },
+}
+`;
+
+exports[`Render <project> Creates itself 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+  },
+}
+`;
+
+exports[`Render <project> Removes children 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "removeSync",
+      "path": "output/Sportello",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+  },
+}
+`;
+
+exports[`Render <project> Renames children 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "renameSync",
+      "newPath": "output/Doc",
+      "oldPath": "output/Sportello",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Doc": "",
+  },
+}
+`;
+
+exports[`Render <root> Removes children 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "removeSync",
+      "path": "output/Sportello",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+  },
+}
+`;
+
+exports[`Render <root> Renames children 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+    Object {
+      "action": "renameSync",
+      "newPath": "output/Doc",
+      "oldPath": "output/Sportello",
+    },
+    Object {
+      "action": "writeFileSync",
+      "contents": "",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Doc": "",
+  },
+}
+`;
+
+exports[`Render <root> Throws when no path is provided 1`] = `"COMPONENTS[type] is not a function"`;

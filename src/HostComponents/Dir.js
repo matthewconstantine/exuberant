@@ -1,45 +1,16 @@
 import invariant from 'invariant'
 import nodePath from 'path'
 import fs from 'fs-extra'
-
-// Note: This is a host component not a React component. It's created
-// by the renderer (render.js) and updated by the reconciler (FileSystemRenderer)
+import FileSystemParent from './FileSystemParent'
 
 const NEW = 'NEW'
 const CREATED = 'CREATED'
 
-class Dir {
+class Dir extends FileSystemParent {
   constructor(root, props) {
-    this.props = props
-    this.children = []
-    this.rename = null
-    this.childrenToDelete = []
+    super(root, props)
     this.status = NEW
-  }
-
-  // Called by FileSystemRenderer
-  appendChild(child) {
-    this.children.push(child)
-  }
-
-  // Called by FileSystemRenderer
-  removeChild(child) {
-    const index = this.children.indexOf(child)
-    this.children.splice(index, 1)
-    this.childrenToDelete.push(child)
-  }
-
-  insertBefore(child, beforeChild) {
-    const index = this.children.indexOf(beforeChild)
-    this.children.splice(index, 0, child)
-  }
-
-  // Called from within the render loop (because only it knows the parentPath)
-  removeDeletedChildren(parentPath) {
-    this.childrenToDelete.forEach(
-      child => child.removeSelf && child.removeSelf(parentPath)
-    )
-    this.childrenToDelete = []
+    this.rename = null
   }
 
   removeSelf(parentPath) {
@@ -62,17 +33,6 @@ class Dir {
     }
   }
 
-  renderChildren(path) {
-    this.removeDeletedChildren(path)
-    this.children.forEach(child => {
-      invariant(
-        typeof child.render === 'function',
-        `Dir can only render components with a render method. Found \`${child}\` instead.`
-      )
-      child.render(path)
-    })
-  }
-
   render(parentPath) {
     let path
     invariant(
@@ -83,6 +43,7 @@ class Dir {
       typeof this.props.name !== 'undefined',
       'Dir does not have props.name'
     )
+    console.log('rename', this.rename)
     if (this.rename) {
       const oldFilePath = nodePath.join(parentPath, this.rename.old)
       path = nodePath.join(parentPath, this.rename.new)

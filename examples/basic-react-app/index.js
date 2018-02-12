@@ -3,8 +3,6 @@ import { Code } from '../../src'
 
 const App = (
   <project>
-    <file key="foo1.txt" name="foo1.txt" />
-    {/* <file key="foo3.txt" name="foo3.txt" /> */}
     <file key="package.json" name="package.json">
       <Code>
         {`
@@ -99,7 +97,7 @@ const App = (
           import List from './components/List'
           import Item from './components/Item'
 
-          const data = ['red', 'green', 'blue', 'mauve']
+          const data = ['red', 'green', 'blue', 'cyan']
 
           const App = () =>
             <List key="Colors" name="Colors">

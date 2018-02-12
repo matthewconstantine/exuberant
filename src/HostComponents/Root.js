@@ -1,64 +1,30 @@
 import invariant from 'invariant'
 import fs from 'fs-extra'
+import FileSystemParent from './FileSystemParent'
+
+// The Root element exists simply to create the output path for
+// an exuberant project. It is not intended to be used directly.
+// Unlike <dir> it cannot be renamed or deleted on subsequent
+// renders.
 
 const NEW = 'NEW'
 const CREATED = 'CREATED'
 
-// TODO: remove anything that isn't essential
-class Root {
+class Root extends FileSystemParent {
   constructor(root, props) {
-    // TODO: refactor out this.props and set this.name and this.path directly
-    this.props = props
-    this.children = []
-    this.childrenToDelete = []
+    super(root, props)
     this.status = NEW
   }
-
-  // Add children
-  appendChild(child) {
-    this.children.push(child)
-  }
-
-  // Called by FileSystemRenderer
-  removeChild(child) {
-    const index = this.children.indexOf(child)
-    this.children.splice(index, 1)
-    this.childrenToDelete.push(child)
-  }
-
-  insertBefore(child, beforeChild) {
-    const index = this.children.indexOf(beforeChild)
-    this.children.splice(index, 0, child)
-  }
-
-  removeDeletedChildren(parentPath) {
-    this.childrenToDelete.forEach(
-      child => child.removeSelf && child.removeSelf(parentPath)
-    )
-    this.childrenToDelete = []
-  }
-
-  renderChildren(path) {
-    this.children.forEach(child => {
-      invariant(
-        typeof child.render === 'function',
-        `Root can only render components with a render method. Found \`${child}\` instead.`
-      )
-      child.render(path)
-    })
-  }
-
   render() {
     invariant(
       typeof this.props.path !== 'undefined',
       'Root node was not provided props.path'
     )
     const { path } = this.props
-    this.removeDeletedChildren(path)
     if (this.status === NEW) {
       // TODO: this might not be necessary since Dir's ensurePath should take care of creating the first path
       console.log(`[Create Root Directory]: `, path)
-      fs.ensureDirSync(path);
+      fs.ensureDirSync(path)
       this.status = CREATED
     }
     this.renderChildren(path)
