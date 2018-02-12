@@ -9,8 +9,9 @@ const FileSystemRenderer = Reconciler({
     parentInstance.appendChild(child)
   },
 
-  createInstance(type, props, internalInstanceHandle /* , fiberNode */) {
-    // console.log('a createInstance', (arguments)); debugger
+  createInstance(type, props, internalInstanceHandle, hostContext, fiberNode) {
+    // console.log('a createInstance', type, props)
+    // fiberNode.key = fiberNode.key || props.name
     return createElement(type, props, internalInstanceHandle)
   },
 

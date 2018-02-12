@@ -8,7 +8,7 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "build:example": "npm run reset:example && node examples/basic-react-app/build.js",
     "watch:example": "node examples/basic-react-app/build.js --watch",
-    "debug:example": "node --inspect-brk examples/basic-react-app/build.js --watch",
+    "debug:example": "npm run reset:example && node --inspect-brk examples/basic-react-app/build.js --watch",
     "reset:example": "rm -rf examples/basic-react-app/output",
     "launch:example": "cd examples/basic-react-app/output && npm install && npm start"
   },

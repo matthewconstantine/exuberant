@@ -23,8 +23,6 @@ class File {
     this.children.splice(index, 1)
   }
 
-  // TODO: This might not be necessary anymore. React doesn't seem to be calling it
-  // now that we represent `text` as `{ text }` objects
   insertBefore(child, beforeChild) {
     const index = this.children.indexOf(beforeChild)
     this.children.splice(index, 0, child)
@@ -73,7 +71,7 @@ class File {
     }
     const contents = this.renderChildren()
     console.log(`[Render file with name:] ${path}`)
-    console.log(`  ${contents.join('\n  ')}`)
+    // console.log(`  ${contents.join('\n  ')}`)
     fs.writeFileSync(path, contents.join('\n'))
     return contents
   }

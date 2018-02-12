@@ -3,7 +3,9 @@ import { Code } from '../../src'
 
 const App = (
   <project>
-    <file name="package.json">
+    <file key="foo1.txt" name="foo1.txt" />
+    {/* <file key="foo3.txt" name="foo3.txt" /> */}
+    <file key="package.json" name="package.json">
       <Code>
         {`
           {
@@ -41,7 +43,7 @@ const App = (
         `}
       </Code>
     </file>
-    <file name="webpack.config.js">
+    <file key="webpack.config.js" name="webpack.config.js">
       <Code>
         {`
           module.exports = {
@@ -70,8 +72,8 @@ const App = (
         `}
       </Code>
     </file>
-    <dir name="dist">
-      <file name="index.html">
+    <dir key="dist" name="dist">
+      <file key="index.html" name="index.html">
         <Code>
           {`
             <!DOCTYPE html>
@@ -88,8 +90,8 @@ const App = (
         </Code>
       </file>
     </dir>
-    <dir name="src">
-      <file name="index.js">
+    <dir key="src" name="src">
+      <file key="index.js" name="index.js">
         <Code>
           {`
           import React from 'react'
@@ -100,7 +102,7 @@ const App = (
           const data = ['red', 'green', 'blue', 'mauve']
 
           const App = () =>
-            <List name="Colors">
+            <List key="Colors" name="Colors">
               {data.map((item) =>
                 <li key={item}>{item}</li>
               )}
@@ -110,8 +112,8 @@ const App = (
           `}
         </Code>
       </file>
-      <dir name="components">
-        <file name="List.js">
+      <dir key="components" name="components">
+        <file key="List.js" name="List.js">
           <Code>
             {`
               import React from 'react'
@@ -126,7 +128,7 @@ const App = (
             `}
           </Code>
         </file>
-        <file name="Item.js">
+        <file key="Item.js" name="Item.js">
           <Code>
             {`
               import React from 'react'

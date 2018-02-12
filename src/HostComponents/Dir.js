@@ -29,6 +29,11 @@ class Dir {
     this.childrenToDelete.push(child)
   }
 
+  insertBefore(child, beforeChild) {
+    const index = this.children.indexOf(beforeChild)
+    this.children.splice(index, 0, child)
+  }
+
   // Called from within the render loop (because only it knows the parentPath)
   removeDeletedChildren(parentPath) {
     this.childrenToDelete.forEach(

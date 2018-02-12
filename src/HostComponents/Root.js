@@ -10,6 +10,7 @@ class Root {
     // TODO: refactor out this.props and set this.name and this.path directly
     this.props = props
     this.children = []
+    this.childrenToDelete = []
     this.status = NEW
   }
 
@@ -23,6 +24,18 @@ class Root {
     const index = this.children.indexOf(child)
     this.children.splice(index, 1)
     this.childrenToDelete.push(child)
+  }
+
+  insertBefore(child, beforeChild) {
+    const index = this.children.indexOf(beforeChild)
+    this.children.splice(index, 0, child)
+  }
+
+  removeDeletedChildren(parentPath) {
+    this.childrenToDelete.forEach(
+      child => child.removeSelf && child.removeSelf(parentPath)
+    )
+    this.childrenToDelete = []
   }
 
   renderChildren(path) {
@@ -41,6 +54,7 @@ class Root {
       'Root node was not provided props.path'
     )
     const { path } = this.props
+    this.removeDeletedChildren(path)
     if (this.status === NEW) {
       // TODO: this might not be necessary since Dir's ensurePath should take care of creating the first path
       console.log(`[Create Root Directory]: `, path)

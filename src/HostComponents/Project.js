@@ -6,7 +6,7 @@ import fs from 'fs-extra'
 // by the renderer (render.js) and updated by the reconciler (FileSystemRenderer)
 
 class Project {
-  constructor(root, props) {
+  constructor() {
     this.children = []
     this.rename = null
     this.childrenToDelete = []
@@ -22,6 +22,11 @@ class Project {
     const index = this.children.indexOf(child)
     this.children.splice(index, 1)
     this.childrenToDelete.push(child)
+  }
+
+  insertBefore(child, beforeChild) {
+    const index = this.children.indexOf(beforeChild)
+    this.children.splice(index, 0, child)
   }
 
   // Called from within the render loop (because only it knows the parentPath)
