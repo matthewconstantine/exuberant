@@ -179,8 +179,8 @@ describe('Render', () => {
       const first = <file name="Doc" />
       const second = <file name="Sportello" />
       renderChange(first, second)
-      renderElement(second, 'output')
-      renderElement(second, 'output')
+      renderElement(second, 'output', 'input')
+      renderElement(second, 'output', 'input')
       expect(fs.snapshot()).toMatchSnapshot()
     })
 

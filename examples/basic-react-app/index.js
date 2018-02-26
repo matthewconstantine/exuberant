@@ -3,63 +3,13 @@ import { Code } from '../../src'
 
 const App = (
   <project>
-    <copy from="templates/package.json" />
-    {/* <file key="package.json" name="package.json">
-      <Code>
-        {`
-          
-        `}
-      </Code>
-    </file> */}
-    <file key="webpack.config.js" name="webpack.config.js">
-      <Code>
-        {`
-          module.exports = {
-            entry: [
-              './src/index.js'
-            ],
-            module: {
-              loaders: [{
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
-              }]
-            },
-            resolve: {
-              extensions: ['.js', '.jsx']
-            },
-            output: {
-              path: __dirname + '/dist',
-              publicPath: '/',
-              filename: 'bundle.js'
-            },
-            devServer: {
-                contentBase: './dist',
-            }
-          };
-        `}
-      </Code>
-    </file>
-    <dir key="dist" name="dist">
-      <file key="index.html" name="index.html">
-        <Code>
-          {`
-            <!DOCTYPE html>
-            <html>
-                <head>
-                    <title>Minimal App Produced by Exuberant</title>
-                </head>
-                <body>
-                    <div id="app"></div>
-                    <script src="bundle.js"></script>
-                </body>
-            </html>
-          `}
-        </Code>
-      </file>
+    <copy from="boilerplate/package.json" key="package.json" />
+    <copy from="boilerplate/webpack.config.js" key="webpack.config" />
+    <dir name="dist" key="dist">
+      <copy from="boilerplate/index.html" key="index.html" />
     </dir>
-    <dir key="src" name="src">
-      <file key="index.js" name="index.js">
+    <dir name="src" key="src">
+      <file name="index.js" key="index.js">
         <Code>
           {`
           import React from 'react'
@@ -80,7 +30,7 @@ const App = (
           `}
         </Code>
       </file>
-      <dir key="components" name="components">
+      <dir name="components" key="components">
         <file key="List.js" name="List.js">
           <Code>
             {`
@@ -96,7 +46,7 @@ const App = (
             `}
           </Code>
         </file>
-        <file key="Item.js" name="Item.js">
+        <file name="Item.js" key="Item.js">
           <Code>
             {`
               import React from 'react'
