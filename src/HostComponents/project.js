@@ -6,12 +6,12 @@ import FileSystemParent from './FileSystemParent'
 // its children elements. It has no affect on the filesystem.
 
 class Project extends FileSystemParent {
-  render(parentPath) {
+  render(parentPath, appPath) {
     invariant(
       typeof parentPath !== 'undefined',
       'props.path was not passed down from parent'
     )
-    this.renderChildren(parentPath)
+    this.renderChildren(parentPath, appPath)
   }
 }
 

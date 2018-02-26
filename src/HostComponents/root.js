@@ -12,22 +12,26 @@ const CREATED = 'CREATED'
 
 class Root extends FileSystemParent {
   constructor(root, props) {
+    console.log("foo props", props)
+    
     super(root, props)
     this.status = NEW
   }
+
   render() {
     invariant(
       typeof this.props.path !== 'undefined',
       'Root node was not provided props.path'
     )
-    const { path } = this.props
+    const { path, appPath } = this.props
+
     if (this.status === NEW) {
       // TODO: this might not be necessary since Dir's ensurePath should take care of creating the first path
       console.log(`[Create Root Directory]: `, path)
       fs.ensureDirSync(path)
       this.status = CREATED
     }
-    this.renderChildren(path)
+    this.renderChildren(path, appPath)
   }
 }
 

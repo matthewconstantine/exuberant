@@ -33,7 +33,7 @@ class Dir extends FileSystemParent {
     }
   }
 
-  render(parentPath) {
+  render(parentPath, appPath) {
     let path
     invariant(
       typeof parentPath !== 'undefined',
@@ -58,7 +58,7 @@ class Dir extends FileSystemParent {
       }
       this.status = CREATED
     }
-    this.renderChildren(path)
+    this.renderChildren(path, appPath)
   }
 }
 

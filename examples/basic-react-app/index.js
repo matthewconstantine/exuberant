@@ -3,44 +3,14 @@ import { Code } from '../../src'
 
 const App = (
   <project>
-    <file key="package.json" name="package.json">
+    <copy from="templates/package.json" />
+    {/* <file key="package.json" name="package.json">
       <Code>
         {`
-          {
-            "name": "basic-exuberant-react-app",
-            "version": "0.1.0",
-            "description": "",
-            "main": "index.js",
-            "scripts": {
-              "start": "webpack-dev-server --progress --colors --config ./webpack.config.js",
-              "test": "echo \\"Error: no test specified\\" && exit 1"
-            },
-            "dependencies": {
-              "react": "^16.1.1",
-              "react-dom": "^16.1.1"
-            },
-            "devDependencies": {
-              "babel-core": "^6.26.0",
-              "babel-loader": "^7.1.2",
-              "babel-preset-env": "^1.6.1",
-              "babel-preset-react": "^6.24.1",
-              "babel-preset-stage-2": "^6.24.1",
-              "webpack": "^3.8.1",
-              "webpack-dev-server": "^2.9.4"
-            },
-            "author": "",
-            "license": "ISC",
-            "babel": {
-              "presets": [
-                "env",
-                "react",
-                "stage-2"
-              ]
-            }
-          }
+          
         `}
       </Code>
-    </file>
+    </file> */}
     <file key="webpack.config.js" name="webpack.config.js">
       <Code>
         {`

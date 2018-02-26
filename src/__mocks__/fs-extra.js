@@ -23,6 +23,11 @@ export default {
     ledger.push({ action: 'writeFileSync', contents })
   },
 
+  copySync: (src, dest) => {
+    volume[dest] = src
+    ledger.push({ action: 'copySync', src, dest })
+  },
+
   removeSync: path => {
     delete volume[path]
     ledger.push({ action: 'removeSync', path })
