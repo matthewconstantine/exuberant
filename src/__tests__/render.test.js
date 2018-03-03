@@ -298,4 +298,24 @@ describe('Render', () => {
       expect(fs.snapshot()).toMatchSnapshot()
     })
   })
+
+  describe('<read>', () => {
+    it('Throws if no `from` prop', () => {
+      const element = <read />
+      const shouldError = () => {
+        renderElement(element, 'output', 'input')
+      }
+      expect(shouldError).toThrowErrorMatchingSnapshot()
+    })
+
+    it('Should return file contents when rendered', () => {
+      const element = (
+        <file name="boat">
+          <read from="boats/golden-fang" />
+        </file>
+      )
+      renderElement(element, 'output', 'input')
+      expect(fs.getPath('output/boat')).toMatchSnapshot()
+    })
+  })
 })

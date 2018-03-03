@@ -33,6 +33,13 @@ export default {
     ledger.push({ action: 'removeSync', path })
   },
 
+  readFileSync: path => {
+    const fakeContents = 'Contents of fs-extra readFileSync mock'
+    volume[path] = fakeContents
+    ledger.push({ action: 'removeSync', path })
+    return fakeContents
+  },
+
   pathExists: path => Boolean(volume[path]),
 
   getPath: path => volume[path],

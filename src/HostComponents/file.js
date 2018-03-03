@@ -46,12 +46,17 @@ class File {
     fs.removeSync(path)
   }
 
-  renderChildren() {
-    return this.children.map(child => child.text)
+  renderChildren(parentPath, appPath) {
+    return this.children.map(child => {
+      if (child.render) {
+        return child.render(parentPath, appPath)
+      }
+      return child.text
+    })
   }
 
   // TODO: This could be optimized for updates with both a new name and contents
-  render(parentPath) {
+  render(parentPath, appPath) {
     let path
     invariant(
       typeof this.name !== 'undefined',
@@ -67,7 +72,7 @@ class File {
     } else {
       path = nodePath.join(parentPath, this.name)
     }
-    const contents = this.renderChildren()
+    const contents = this.renderChildren(parentPath, appPath)
     console.log(`[Render file with name:] ${path}`)
     // console.log(`  ${contents.join('\n  ')}`)
     fs.writeFileSync(path, contents.join('\n'))

@@ -490,6 +490,10 @@ Object {
 }
 `;
 
+exports[`Render <read> Should return file contents when rendered 1`] = `"Contents of fs-extra readFileSync mock"`;
+
+exports[`Render <read> Throws if no \`from\` prop 1`] = `"<read> was not provided props.from"`;
+
 exports[`Render <root> Removes children 1`] = `
 Object {
   "ledger": Array [
