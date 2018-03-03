@@ -1,5 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Render <copy> Can remove itself 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "ensureDirSync",
+      "path": "output/golden-fang",
+    },
+    Object {
+      "action": "copySync",
+      "dest": "output/golden-fang/Sportello",
+      "src": "input/templates/doc",
+    },
+    Object {
+      "action": "removeSync",
+      "path": "output/golden-fang/Sportello",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/golden-fang": true,
+  },
+}
+`;
+
+exports[`Render <copy> Copies a file and retains its name 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "copySync",
+      "dest": "output/doc",
+      "src": "input/templates/doc",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/doc": "input/templates/doc",
+  },
+}
+`;
+
+exports[`Render <copy> Copies a file with a new name 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "copySync",
+      "dest": "output/Larry",
+      "src": "input/templates/doc",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Larry": "input/templates/doc",
+  },
+}
+`;
+
+exports[`Render <copy> Renames a file 1`] = `
+Object {
+  "ledger": Array [
+    Object {
+      "action": "ensureDirSync",
+      "path": "output",
+    },
+    Object {
+      "action": "copySync",
+      "dest": "output/Sportello",
+      "src": "input/templates/doc",
+    },
+    Object {
+      "action": "copySync",
+      "dest": "output/Larry",
+      "src": "input/templates/doc",
+    },
+    Object {
+      "action": "removeSync",
+      "path": "output/Sportello",
+    },
+  ],
+  "volume": Object {
+    "output": true,
+    "output/Larry": "input/templates/doc",
+  },
+}
+`;
+
+exports[`Render <copy> Throws if no \`from\` prop 1`] = `"<copy> was not provided props.from"`;
+
 exports[`Render <dir> Adds children 1`] = `
 Object {
   "ledger": Array [

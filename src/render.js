@@ -1,4 +1,5 @@
 /* eslint-disable global-require, import/no-dynamic-require, no-console */
+import invariant from 'invariant'
 import path from 'path'
 import decache from 'decache'
 import chokidar from 'chokidar'
@@ -7,8 +8,12 @@ import FileSystemRenderer from './FileSystemRenderer'
 
 const defaultLogger = console.log
 
-export const renderElement = (element, outputPath) => {
-  const container = createElement('ROOT', { path: outputPath })
+export const renderElement = (element, outputPath, appPath) => {
+  invariant(
+    typeof appPath !== 'undefined',
+    'no appPath argument was passed to renderElement'
+  )
+  const container = createElement('ROOT', { path: outputPath, appPath })
   const node = FileSystemRenderer.createContainer(container)
   FileSystemRenderer.updateContainer(element, node, null)
   container.render()
@@ -21,21 +26,22 @@ export const rerenderElement = (element, state) => {
   container.render()
 }
 
-export const render = (appPath, outputPath, options, log = defaultLogger) => {
-  const app = require(appPath)
+export const render = (appFile, outputPath, options, log = defaultLogger) => {
+  const app = require(appFile)
+  const appPath = path.dirname(appFile)
   const element = app.default
-  const state = renderElement(element, outputPath)
+  const state = renderElement(element, outputPath, appPath)
 
   if (options.watch) {
-    log(`Watching... ${path.dirname(appPath)}`)
-    const watcher = chokidar.watch(path.dirname(appPath), {
+    log(`Watching... ${appPath}`)
+    const watcher = chokidar.watch(appPath, {
       ignored: [/(^|[/\\])\../, outputPath],
     })
     watcher.on('change', changePath => {
       const displayPath = path.relative(process.cwd(), changePath)
       log(`\n\nRebuilding. Detected change in ${displayPath}}`)
-      decache(appPath)
-      const updatedApp = require(appPath)
+      decache(appFile)
+      const updatedApp = require(appFile)
       const updatedElement = updatedApp.default
       rerenderElement(updatedElement, state)
     })

@@ -4,7 +4,7 @@ import { renderElement, rerenderElement } from '../'
 import createElement from '../createElement'
 
 const renderChange = (oldElement, newElement) =>
-  rerenderElement(newElement, renderElement(oldElement, 'output'))
+  rerenderElement(newElement, renderElement(oldElement, 'output', 'input'))
 
 const Text = ({ children }) => (children.join ? children.join('\n') : children)
 
@@ -38,7 +38,7 @@ describe('Render', () => {
   describe('<project>', () => {
     it('Creates itself', () => {
       const element = <project />
-      renderElement(element, 'output')
+      renderElement(element, 'output', 'input')
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
@@ -88,7 +88,7 @@ describe('Render', () => {
   describe('<dir>', () => {
     it('Creates itself', () => {
       const element = <dir name="shasta" />
-      renderElement(element, 'output')
+      renderElement(element, 'output', 'input')
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
@@ -113,7 +113,7 @@ describe('Render', () => {
     it('Throws when no name is provided', () => {
       const element = <dir />
       const shouldError = () => {
-        renderElement(element, 'output')
+        renderElement(element, 'output', 'input')
       }
       expect(shouldError).toThrowErrorMatchingSnapshot()
     })
@@ -161,11 +161,10 @@ describe('Render', () => {
     })
   })
 
-
   describe('<file>', () => {
     it('Creates a file', () => {
       const element = <file name="Sportello" />
-      renderElement(element, 'output')
+      renderElement(element, 'output', 'input')
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
@@ -180,8 +179,8 @@ describe('Render', () => {
       const first = <file name="Doc" />
       const second = <file name="Sportello" />
       renderChange(first, second)
-      renderElement(second, 'output')
-      renderElement(second, 'output')
+      renderElement(second, 'output', 'input')
+      renderElement(second, 'output', 'input')
       expect(fs.snapshot()).toMatchSnapshot()
     })
 
@@ -199,14 +198,14 @@ describe('Render', () => {
     it('Throws when no name is provided', () => {
       const element = <file />
       const shouldError = () => {
-        renderElement(element, 'output')
+        renderElement(element, 'output', 'input')
       }
       expect(shouldError).toThrowErrorMatchingSnapshot()
     })
 
     it('Renders plain text', () => {
       const element = <file name="Sportello">Ahhh!</file>
-      renderElement(element, 'output')
+      renderElement(element, 'output', 'input')
       expect(fs.getPath('output/Sportello')).toMatchSnapshot()
     })
 
@@ -257,6 +256,46 @@ describe('Render', () => {
       )
       renderChange(first, second)
       expect(fs.getPath('output/Sportello')).toMatchSnapshot()
+    })
+  })
+
+  describe('<copy>', () => {
+    it('Throws if no `from` prop', () => {
+      const element = <copy />
+      const shouldError = () => {
+        renderElement(element, 'output', 'input')
+      }
+      expect(shouldError).toThrowErrorMatchingSnapshot()
+    })
+
+    it('Copies a file and retains its name', () => {
+      const element = <copy from="templates/doc" />
+      renderElement(element, 'output', 'input')
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+
+    it('Copies a file with a new name', () => {
+      const element = <copy from="templates/doc" name="Larry" />
+      renderElement(element, 'output', 'input')
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+
+    it('Renames a file', () => {
+      const first = <copy from="templates/doc" name="Sportello" />
+      const second = <copy from="templates/doc" name="Larry" />
+      renderChange(first, second)
+      expect(fs.snapshot()).toMatchSnapshot()
+    })
+
+    it('Can remove itself', () => {
+      const first = (
+        <dir name="golden-fang">
+          <copy from="templates/doc" name="Sportello" />
+        </dir>
+      )
+      const second = <dir name="golden-fang" />
+      renderChange(first, second)
+      expect(fs.snapshot()).toMatchSnapshot()
     })
   })
 })
