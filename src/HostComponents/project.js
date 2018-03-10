@@ -12,6 +12,7 @@ class Project extends FileSystemParent {
       'props.path was not passed down from parent'
     )
     this.renderChildren(parentPath, appPath)
+    if (this.props.didRender) this.props.didRender(parentPath)
   }
 }
 

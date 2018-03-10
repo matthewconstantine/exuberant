@@ -39,14 +39,14 @@ class FileSystemParent {
     this.childrenToDelete = []
   }
 
-  renderChildren(path, appPath) {
-    this.removeDeletedChildren(path)
+  renderChildren(parentPath, appPath) {
+    this.removeDeletedChildren(parentPath)
     this.children.forEach(child => {
       invariant(
         typeof child.render === 'function',
         `Exuberant HostComponents can only render components with a render method. Found \`${child}\` instead.`
       )
-      child.render(path, appPath)
+      child.render(parentPath, appPath)
     })
   }
 }
