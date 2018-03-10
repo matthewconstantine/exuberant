@@ -43,7 +43,6 @@ class Dir extends FileSystemParent {
       typeof this.props.name !== 'undefined',
       'Dir does not have props.name'
     )
-    console.log('rename', this.rename)
     if (this.rename) {
       const oldFilePath = nodePath.join(parentPath, this.rename.old)
       path = nodePath.join(parentPath, this.rename.new)

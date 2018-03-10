@@ -12,8 +12,6 @@ const CREATED = 'CREATED'
 
 class Root extends FileSystemParent {
   constructor(root, props) {
-    console.log("foo props", props)
-    
     super(root, props)
     this.status = NEW
   }

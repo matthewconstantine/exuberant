@@ -12,9 +12,7 @@ import Read from './HostComponents/read'
  * @param {Object} root Root instance
  */
 function createElement(type, props, root) {
-  console.log('type, props', type, props)
-
-  const COMPONENTS = {
+    const COMPONENTS = {
     ROOT: () => new Root(root, props),
     project: () => new Project(root, props),
     dir: () => new Dir(root, props),

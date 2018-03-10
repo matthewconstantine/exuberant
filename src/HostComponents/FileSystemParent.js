@@ -47,6 +47,7 @@ class FileSystemParent {
         `Exuberant HostComponents can only render components with a render method. Found \`${child}\` instead.`
       )
       child.render(path, appPath)
+      if (this.props.didRender) this.props.didRender(path)
     })
   }
 }
