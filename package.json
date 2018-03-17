@@ -10,7 +10,9 @@
     "watch:example": "node examples/basic-react-app/build.js --watch",
     "debug:example": "npm run reset:example && node --inspect-brk examples/basic-react-app/build.js --watch",
     "reset:example": "rm -rf examples/basic-react-app/output",
-    "launch:example": "cd examples/basic-react-app/output && npm install && npm start"
+    "launch:example": "cd examples/basic-react-app/output && npm install && npm start",
+    "reset:example2": "rm -rf examples/server-tag-example/output",
+    "watch:example2": "node examples/server-tag-example/build.js --watch"
   },
   "author": "Matthew Constantine <designmc@gmail.com>",
   "license": "MIT",
@@ -29,6 +31,7 @@
     "jsome": "^2.3.26",
     "path": "^0.12.7",
     "performance-now": "^2.1.0",
+    "prop-types": "15.6.1",
     "react": "^16.2.0",
     "react-reconciler": "^0.7.0",
     "strip-indent": "^2.0.0",
