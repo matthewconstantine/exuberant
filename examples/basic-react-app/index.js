@@ -1,110 +1,135 @@
 import React from 'react'
-import { spawn } from 'child_process'
 import { Code } from '../../src'
 
-const processPromise = (command, args = [], { cwd, logData, logError }) =>
-  new Promise((resolve, reject) => {
-    const proc = spawn(command, args, { cwd })
-    logData(`Starting \`${command} ${args.join(' ')}\``)
-    proc.on('error', error => {
-      logError(`Failed to start subprocess. Error: ${error}`)
-      reject(error)
-    })
-    proc.stdout.on('data', logData)
-    proc.stderr.on('data', logError)
-    proc.on('close', code => {
-      if (!code) {
-        logData('Successfuly Exited')
-        resolve(code)
-      } else {
-        logError(`Process Failed with exit code: ${code}`)
-        reject(code)
-      }
-    })
-  })
-
-const makeLogger = prefix => data =>
-  console.log(`\n_| ${prefix} |_____________________________________\n${data}`)
-
-const install = outputPath =>
-  processPromise('npm', ['install'], {
-    cwd: outputPath,
-    logData: makeLogger('Install Process'),
-    logError: data => console.log(`${data}`),
-  })
-
-const start = outputPath =>
-  processPromise('npm', ['start'], {
-    cwd: outputPath,
-    logData: makeLogger('Server Process'),
-    logError: data => console.log(`${data}`),
-  })
-
-class App extends React.Component {
-  installThenStart(outputPath) {
-    install(outputPath).then(() => {
-      start(outputPath)
-    })
-  }
-
-  render() {
-    return (
-      <project didRender={this.installThenStart}>
-        <copy from="boilerplate/package.json" key="package.json" />
-        <copy from="boilerplate/webpack.config.js" key="webpack.config" />
-        <dir name="dist" key="dist">
-          <copy from="boilerplate/index.html" key="index.html" />
-        </dir>
-        <dir name="src" key="src">
-          <file name="index.js" key="index.js">
-            <Code>
-              {`
-              import React from 'react'
-              import ReactDOM from 'react-dom'
-              import List from './components/List'
-              import Item from './components/Item'
-
-              const data = ['red', 'green', 'blue', 'not green']
-
-              const App = () =>
-                <List key="Colors" name="Colors">
-                  {data.map((item) =>
-                    <li key={item}>{item}</li>
-                  )}
-                </List>
-
-              ReactDOM.render(<App />, document.getElementById('app'));
-              `}
-            </Code>
-          </file>
-          <dir name="components" key="components">
-            <file key="List.js" name="List.js">
-              <Code>
-                {`
-                  import React from 'react'
-
-                  export default (props) =>
-                    <div>
-                      <h1>List of {props.name}</h1>
-                      <ul>{props.children}</ul>
-                    </div>
-                `}
-              </Code>
-            </file>
-            <file name="Item.js" key="Item.js">
-              <Code>
-                {`
-                  import React from 'react'
-
-                  export default (props) => <li>{props.children}</li>
-                `}
-              </Code>
-            </file>
-          </dir>
-        </dir>
-      </project>
-    )
-  }
+const defaultConfig = {
+  background: '#94BA65',
 }
 
-export default <App />
+const App = (config = defaultConfig) => (
+  <project>
+    <copy from="boilerplate/package.json" key="package.json" />
+    <copy from="boilerplate/webpack.config.js" key="webpack.config" />
+    <dir name="dist" key="dist">
+      <copy from="boilerplate/index.html" key="index.html" />
+    </dir>
+
+    <dir name="src" key="src">
+      <file name="index.js" key="index.js">
+        <Code>
+          {`
+          import React from 'react'
+          import ReactDOM from 'react-dom'
+          import Slides from './components/Slides'
+          import Slide from './components/Slide'
+          import script from './data/script'
+
+          const App = () =>
+            <Slides key="Colors" name="Colors" speed={5000}>
+              {current => script.map((content, index) =>
+                <Slide active={index === current % script.length} key={index}>
+                  {content}
+                </Slide>
+              )}
+            </Slides>
+
+          ReactDOM.render(<App />, document.getElementById('app'));
+          `}
+        </Code>
+      </file>
+
+      <dir name="components" key="components">
+        <file name="Slides.js" key="slides">
+          <Code>
+            {`
+              import React, { Component } from 'react'
+
+              export default class Slides extends Component {
+                state = { current: 0 }
+                static defaultProps = { speed: 1000 }
+
+                constructor() {
+                  super()
+                  this.advance = this.advance.bind(this)
+                }
+
+                componentDidMount() {
+                  setInterval(this.advance.bind(this), this.props.speed)
+                }
+
+                advance() {
+                  this.setState({ current: this.state.current + 1 })
+                }
+
+                render() {
+                  return (
+                    <div onClick={this.advance}>
+                      {this.props.children(this.state.current)}
+                    </div>
+                  )
+                }
+              }
+            `}
+          </Code>
+        </file>
+
+        <file name="Slide.js" key="Slide.js">
+          <Code>
+            {`
+              import React from 'react'
+              import styled from 'styled-components'
+              
+              const Style = styled.div\`
+                display: flex;
+                background: ${config.background};
+                color: rgba(255,255,255,0.9);
+                height: 100vh;
+                width: 100vw;
+                font-size: 8vh;
+                padding: 0 10vw;
+                box-sizing: border-box;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-weight: 500;
+                cursor: pointer;
+              \`
+
+              export default (props) =>
+                props.active && (
+                  <Style>
+                    {props.children}
+                  </Style>
+                )
+            `}
+          </Code>
+        </file>
+      </dir>
+
+      <dir name="data" key="data">
+        <file name="script.js" key="script">
+          <Code>
+            {`
+              import React from 'react'
+              
+              export default [
+                <div>This is a simple React App</div>,
+                <div>It was generated by Exuberant</div>,
+                <div>Exuberant is a versatile templating&nbsp;tool</div>,
+                <div>and a React filesystem renderer</div>,
+                <div>Exuberant allows you to use the React skills you already&nbsp;have</div>,
+                <div>to write code generators,</div>,
+                <div>automate grunt work,</div>,
+                <div>and maybe even deploy&nbsp;servers</div>,
+                <div>all from simple react apps</div>,
+                <div>that target the filesystem instead of the DOM</div>,
+                '',
+              ]
+            `}
+          </Code>
+        </file>
+      </dir>
+    </dir>
+  </project>
+)
+
+export default App()
